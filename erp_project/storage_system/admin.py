@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from .models import User, Tag, Status, Category, Product, Customer
-
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nickname']
+from .models import Tag, Status, Category, Product, Customer
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -20,14 +16,17 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'price', 'created_time', 'modified_time']
+    list_display = ['id', 'name', 'price', 'image', 'status', 'sale_date', 'purchaser', 'info',
+                    'created_time', 'modified_time']
+
+    list_filter = ('id', 'name', 'price', 'image', 'status', 'sale_date', 'purchaser', 'info',
+                   'created_time', 'modified_time')  # 过滤器
 
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'created_time', 'modified_time']
 
 
-admin.site.register(User, UserAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Status, StatusAdmin)
 admin.site.register(Category, CategoryAdmin)
