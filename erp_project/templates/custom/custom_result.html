@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="bs-example" data-example-id="panel-without-body-with-table">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="font-size: 20px">搜索结果</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>生日</th>
+                <th>地址</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for c in custom %}
+            <tr>
+                <th scope="row">{{ c.id }}</th>
+                <td>{{ c.username }}</td>
+                <td>{{ c.cellphone }}</td>
+                <td>{{ c.birthday }}</td>
+                <td>{{ c.address }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% ifequal count 0 %}
+    <script type="text/javascript">
+                var t = 3;//设定跳转的时间
+                setInterval("refer()", 1000); //启动1秒定时
+                function refer() {
+                    if (t == 0){
+                        location = "/custom_list"; //跳转的地址
+                    }
+                    document.getElementById('show').innerHTML = "没有搜索到你想要的顾客信息," + t + "秒后跳转回顾客列表页"; // 显示倒计时
+                    t--; // 计数器递减
+                }
+            </script>
+    <div style="padding-left: 20%; font-size: 30px" id="show"></div>
+    {% endifequal %}
+</div>
+{% endblock %}

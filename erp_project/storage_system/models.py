@@ -29,11 +29,8 @@ class Tag(models.Model):
 
 
 class Status(models.Model):
-    status_choice = (
-        (0, '已入库'),
-        (1, '')
-    )
-    status = models.CharField(max_length=64, verbose_name='状态')
+
+    status = models.CharField(max_length=32, verbose_name='状态')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')
     is_delete = models.BooleanField(default=False, verbose_name='是否删除')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
@@ -88,10 +85,11 @@ class Product(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
     image = models.ImageField(blank=True, null=True, verbose_name='商品图片')
-    status = models.ForeignKey(Status, verbose_name='商品状态', default=0)
+    status = models.ForeignKey(Status, verbose_name='商品状态')
     category = models.ForeignKey(Category, verbose_name='分类')
     sale_date = models.DateTimeField(blank=True, null=True, verbose_name='销售日期')
     purchaser = models.ForeignKey(Customer, blank=True, null=True, verbose_name='购买者')
+    storage = models.IntegerField(verbose_name='库存数量')
     info = models.TextField(blank=True, null=True, verbose_name='产品信息')
     tag = models.ManyToManyField(Tag, blank=True, verbose_name='标签')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')

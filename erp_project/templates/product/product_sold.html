@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block search %}
+
+<!-- Topbar Search -->
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/custom_search/">
+      {% csrf_token %}
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block body %}
+<div class="bs-example" data-example-id="panel-without-body-with-table">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="font-size: 20px">商品销售列表</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>商品图片</th>
+                <th>商品状态</th>
+                <th>购买/预定人</th>
+                <th>商品分类</th>
+                <th></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in product %}
+            <tr>
+                <th scope="row">{{ p.id }}</th>
+                <td>{{ p.name }}</td>
+                <td>{{ p.price }}</td>
+                <td>{{ p.image }}</td>
+                <td>{{ p.status }}</td>
+                {% if p.purchaser == None %}
+                <td>无</td>
+                {% else %}
+                <td>{{ p.sale_date }}</td>
+                {% endif %}
+                <td>{{ p.category }}</td>
+                {% if p.sale_date == None %}
+                <td>暂未售出</td>
+                {% else %}
+                <td>{{ p.sale_date }}</td>
+                {% endif %}
+                <td>
+                    <a href="#">修改</a>
+                    <a href="#">销货</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

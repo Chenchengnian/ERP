@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+<form style="padding-left: 10%" class="form" action="{% url 'storage_system:create_product' %}" method="post">
+  {% csrf_token %}
+  {% for field in product_form %}
+    {{ field.label_tag }}
+    <div class="form-group">
+    <label>{{ field }}</label>
+        <br>
+  </div>
+    {{ field.errors }}
+    {% if field.help_text %}
+        <p class="help text-small text-muted">{{ field.help_text|safe }}</p>
+    {% endif %}
+  {% endfor %}
+  <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认新建</button>
+</form>
+
+
+{% endblock %}

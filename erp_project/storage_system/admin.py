@@ -17,7 +17,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price', 'image', 'status', 'sale_date', 'purchaser', 'info',
-                    'created_time', 'modified_time']
+                    'storage', 'created_time', 'modified_time']
 
     list_filter = ('id', 'name', 'price', 'image', 'status', 'sale_date', 'purchaser', 'info',
                    'created_time', 'modified_time')  # 过滤器
