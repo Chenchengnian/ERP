@@ -44,7 +44,7 @@
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-                <td>{{ p.image }}</td>
+                <td><img style="height: 80px; weight: 80px" src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6fjsd44f5j309y0c9mxx.jpg"></td>
                 <td>{{ p.status }}</td>
                 {% if p.purchaser == None %}
                 <td>无</td>
@@ -52,14 +52,28 @@
                 <td>{{ p.sale_date }}</td>
                 {% endif %}
                 <td>{{ p.category }}</td>
-                {% if p.sale_date == None %}
-                <td>暂未售出</td>
-                {% else %}
-                <td>{{ p.sale_date }}</td>
-                {% endif %}
+                <td>{{ p.storage }}</td>
                 <td>
-                    <a href="#">修改</a>
+                    <a id="modify" href="http://www.baidu.com">修改</a>
                     <a href="#">销货</a>
+                    <script>
+                        $("#modify").on("click",function(event){
+    event.preventDefault();//使a自带的方法失效，即无法调整到href中的URL(http://www.baidu.com)
+    $.ajax({
+           type: "POST",
+           url: "url地址",
+           contentType:"application/json",
+           data: JSON.stringify({param1:param1,param2:param2}),//参数列表
+           dataType:"json",
+           success: function(result){
+              //请求正确之后的操作
+           },
+           error: function(result){
+              //请求失败之后的操作
+           }
+    });
+});
+                    </script>
                 </td>
             </tr>
             {% endfor %}

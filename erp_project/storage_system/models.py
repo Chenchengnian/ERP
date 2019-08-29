@@ -2,17 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class User(AbstractUser):
-    nickname = models.CharField(max_length=50, blank=True, verbose_name='用户名')
-
-    class Meta(AbstractUser.Meta):
-        verbose_name = '账号'
-        verbose_name_plural = '账号'
-
-    def __str__(self):
-        return self.nickname
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='标签名')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')
@@ -29,7 +18,6 @@ class Tag(models.Model):
 
 
 class Status(models.Model):
-
     status = models.CharField(max_length=32, verbose_name='状态')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')
     is_delete = models.BooleanField(default=False, verbose_name='是否删除')
@@ -60,7 +48,7 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    image = models.ImageField(blank=True, null=True, verbose_name='顾客照片')
+    image = models.ImageField(blank=True, null=True, upload_to='custom/', verbose_name='顾客照片')
     username = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='顾客姓名')
     cellphone = models.CharField(max_length=200, verbose_name='顾客电话')
     wechat = models.CharField(max_length=200, verbose_name='顾客微信')
@@ -84,7 +72,7 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
-    image = models.ImageField(blank=True, null=True, verbose_name='商品图片')
+    image = models.ImageField(blank=True, null=True, upload_to='product/', verbose_name='商品图片')
     status = models.ForeignKey(Status, verbose_name='商品状态')
     category = models.ForeignKey(Category, verbose_name='分类')
     sale_date = models.DateTimeField(blank=True, null=True, verbose_name='销售日期')
