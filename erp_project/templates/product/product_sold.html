@@ -34,7 +34,7 @@
                 <th>商品状态</th>
                 <th>购买/预定人</th>
                 <th>商品分类</th>
-                <th></th>
+                <th>出售时间</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -46,17 +46,9 @@
                 <td>{{ p.price }}</td>
                 <td>{{ p.image }}</td>
                 <td>{{ p.status }}</td>
-                {% if p.purchaser == None %}
-                <td>无</td>
-                {% else %}
-                <td>{{ p.sale_date }}</td>
-                {% endif %}
+                <td>{{ p.purchaser }}</td>
                 <td>{{ p.category }}</td>
-                {% if p.sale_date == None %}
-                <td>暂未售出</td>
-                {% else %}
                 <td>{{ p.sale_date }}</td>
-                {% endif %}
                 <td>
                     <a href="#">修改</a>
                     <a href="#">销货</a>

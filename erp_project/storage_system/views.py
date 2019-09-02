@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -12,8 +14,6 @@ def get_customer():
 
 
 class GetData:
-    # def month_earn(self):
-    #     price = Product.objects.filter(status=)
     pass
 
 
@@ -31,12 +31,18 @@ def custom_list(request):
 
 
 def product_list(request):
-    product = Product.objects.all().order_by('-created_time')
-    return render(request, 'product/product_list.html', {'product': product})
+    # product = Product.objects.all().order_by('-created_time')
+    # for p in product:
+    #     print(p.image)
+    sold_product = Product.objects.filter(status=2)
+    for p in sold_product:
+        price = 0 + p.price
+        print(price)
+    return render(request, 'product/product_list.html', {'product': sold_product})
 
 
-def product_sold(request):
-    product = Product.objects.filter(status=0).order_by('-created_time')
+def product_sold_list(request):
+    product = Product.objects.filter(status=2).order_by('-created_time')
     return render(request, 'product/product_sold.html', {'product': product})
 
 
