@@ -2,29 +2,11 @@
 
 {% load staticfiles %}
 
-{% block search %}
-
-<!-- Topbar Search -->
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST"
-      action="/product_search/">
-    {% csrf_token %}
-    <div class="input-group">
-        <div class="input-group-append">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search"
-                   aria-describedby="basic-addon2" name="keyword" required="required">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
-        </div>
-    </div>
-</form>
-{% endblock %}
-
 {% block body %}
 <div class="bs-example" data-example-id="panel-without-body-with-table">
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading" style="font-size: 20px">商品信息列表</div>
+        <div class="panel-heading" style="font-size: 20px">搜索结果</div>
 
         <!-- Table -->
         <table class="table">
@@ -42,13 +24,12 @@
             </tr>
             </thead>
             <tbody>
-            {% for p in product %}
+            {% for c in custom %}
             <tr>
-                <th scope="row">{{ p.id }}</th>
+               <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-                <td><a href="/media/{{ p.image }}/" target="_blank">查看图片</a></td>
-<!--                <td><img style="height: 80px; weight: 80px" src="media/{{ p.image }}"></td>-->
+                <td><img style="height: 80px; weight: 80px" src="/product/陈承念.jpg"></td>
                 <td>{{ p.status }}</td>
                 {% if p.purchaser == None %}
                 <td>无</td>
@@ -67,7 +48,18 @@
         </table>
     </div>
     {% ifequal count 0 %}
-    <h1 style="text-align: center; line-height: 400px">当前没有商品,快去<a href="/create_product">添加</a>吧</h1>
+    <script type="text/javascript">
+                var t = 3;//设定跳转的时间
+                setInterval("refer()", 1000); //启动1秒定时
+                function refer() {
+                    if (t == 0){
+                        location = "/custom_list"; //跳转的地址
+                    }
+                    document.getElementById('show').innerHTML = "没有搜索到你想要的商品信息," + t + "秒后跳转回商品列表页"; // 显示倒计时
+                    t--; // 计数器递减
+                }
+            </script>
+    <div style="padding-left: 20%; font-size: 30px" id="show"></div>
     {% endifequal %}
 </div>
 {% endblock %}

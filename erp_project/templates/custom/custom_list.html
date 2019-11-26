@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 
 {% block search %}
 
@@ -7,10 +8,10 @@
 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/custom_search/">
       {% csrf_token %}
     <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
         <div class="input-group-append">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
             <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
+                <i style="vertical-align:middle" class="fas fa-search fa-sm"></i>
             </button>
         </div>
     </div>
@@ -47,5 +48,8 @@
             </tbody>
         </table>
     </div>
+    {% ifequal count 0 %}
+    <h1 style="text-align: center; line-height: 400px">当前没有顾客,快去<a href="/create_custom">添加</a>吧</h1>
+    {% endifequal %}
 </div>
 {% endblock %}

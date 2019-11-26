@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^product_list$', views.product_list, name='product_list'),
     url(r'^product_sold$', views.product_sold_list, name='product_sold'),
     url(r'^create_product$', views.create_product, name='create_product'),
-    url(r'^sold_product$', views.sold_product, name='sold_product'),
+    url(r'^product_search/$', views.product_search, name='product_search'),
+    # url(r'^sold_product$', views.sold_product, name='sold_product'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

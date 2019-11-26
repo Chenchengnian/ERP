@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 
 class Tag(models.Model):
@@ -48,11 +47,11 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    image = models.ImageField(blank=True, null=True, upload_to='custom', verbose_name='顾客照片')
+    image = models.ImageField(upload_to='media/custom', default='media/custom/default.png', verbose_name='顾客照片')
     username = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='顾客姓名')
     cellphone = models.CharField(max_length=200, verbose_name='顾客电话')
     wechat = models.CharField(max_length=200, verbose_name='顾客微信')
-    birthday = models.DateField(verbose_name='顾客生日')
+    birthday = models.DateField(blank=True, null=True, verbose_name='顾客生日,格式:1999-01-01')
     address = models.CharField(max_length=200, verbose_name='顾客地址')
     user_info = models.TextField(verbose_name='顾客信息', blank=True, null=True)
     tag = models.ManyToManyField(Tag, blank=True, verbose_name='标签')
@@ -72,7 +71,7 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
-    image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name='商品图片')
+    image = models.ImageField(upload_to='media/product', default='media/product/default.png', verbose_name='商品图片')
     status = models.ForeignKey(Status, verbose_name='商品状态')
     category = models.ForeignKey(Category, verbose_name='分类')
     sale_date = models.DateTimeField(blank=True, null=True, verbose_name='销售日期')

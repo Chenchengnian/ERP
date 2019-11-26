@@ -2,8 +2,12 @@
 
 {% load staticfiles %}
 
+{% block search %}
+<h1>新增顾客</h1>
+{% endblock %}
+
 {% block body %}
-<form style="padding-left: 10%" class="form" action="{% url 'storage_system:create_custom' %}" method="post">
+<form style="padding-left: 10%" class="form" action="{% url 'storage_system:create_custom' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% for field in custom_form %}
     {{ field.label_tag }}

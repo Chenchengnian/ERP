@@ -2,8 +2,12 @@
 
 {% load staticfiles %}
 
+{% block search %}
+<h1>商品录入</h1>
+{% endblock %}
+
 {% block body %}
-<form style="padding-left: 10%" class="form" action="{% url 'storage_system:create_product' %}" method="post">
+<form style="padding-left: 5%" class="form" action="{% url 'storage_system:create_product' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% for field in product_form %}
     {{ field.label_tag }}
@@ -18,6 +22,4 @@
   {% endfor %}
   <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认新建</button>
 </form>
-
-
 {% endblock %}

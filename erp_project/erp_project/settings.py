@@ -24,7 +24,7 @@ SECRET_KEY = 'mi9sc8k79-#9g@c@&h*9ozj#w-=%!b6i85bgn90h282+77e&7-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.11.7', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storage_system'
+    'storage_system',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +76,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'NAME': 'erp',  # 数据库名称
+        'NAME': 'test',  # 数据库名称
         'USER': 'root',  # 用户名
         'PASSWORD': 'chenchengnian',  # 密码
         'HOST': '127.0.0.1',  # 主机IP地址
@@ -123,5 +123,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
+MEIDA_ROOT = '{}/media/'.format(BASE_DIR)
 
