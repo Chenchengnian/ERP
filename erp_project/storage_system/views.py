@@ -38,11 +38,6 @@ def product_list(request):
     count = Product.objects.all().count()
     return render(request, 'product/product_list.html', {'product': product,
                                                          'count': count})
-    # sold_product = Product.objects.filter(status=2)
-    # for p in sold_product:
-    #     price = 0 + p.price
-    #     print(price)
-    # return render(request, 'product/product_list.html', {'product': sold_product})
 
 
 def product_sold_list(request):
@@ -110,5 +105,14 @@ def product_search(request):
     return render(request, 'product/product_result.html', {'custom': custom})
 
 
-def sale_product(request):
+def update_product(request):
     pass
+
+
+def sold_project(request):
+    pass
+
+
+def project_detail(request, pid):
+    product = Product.objects.get(id=pid)
+    return render(request, 'product/product_detail.html', {'product': product})

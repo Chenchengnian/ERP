@@ -11,9 +11,11 @@ urlpatterns = [
     url(r'^create_custom$', views.create_custom, name='create_custom'),
     url(r'^custom_search/$', views.custom_search, name='custom_search'),
     url(r'^product_list$', views.product_list, name='product_list'),
-    url(r'^product_sold$', views.product_sold_list, name='product_sold'),
+    url(r'^product_sold_list', views.product_sold_list, name='product_sold_list'),
     url(r'^create_product$', views.create_product, name='create_product'),
     url(r'^product_search/$', views.product_search, name='product_search'),
-    # url(r'^sold_product$', views.sold_product, name='sold_product'),
+    url(r'^sold_project', views.sold_project, name='sold_project'),
+    url(r'^update_product', views.update_product, name='update_product'),
+    url(r'^project_detail/(?P<pid>\d+)$', views.project_detail, name='project_detail'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -47,8 +47,16 @@
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-                <td><a href="/media/{{ p.image }}/" target="_blank">查看图片</a></td>
-<!--                <td><img style="height: 80px; weight: 80px" src="media/{{ p.image }}"></td>-->
+
+<!--                <td><a href="/media/{{ p.image }}/" data-target=".bs-example-modal-lg">查看图片</a></td>-->
+
+                <td><div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#">查看图片</a></div></td>
+
+                    <div class="modal fade bs-example-modal-lg" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true">
+                            <img src="media/{{ p.image }}">
+                      </div>
+                    </div>
                 <td>{{ p.status }}</td>
                 {% if p.purchaser == None %}
                 <td>无</td>
@@ -58,8 +66,7 @@
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
                 <td>
-                    <a class="{{ p.id }}" href="/sold_product">修改</a>
-                    <a class="{{ p.id }}" href="#">销货</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:project_detail' p.id %}">查看详情</a>
                 </td>
             </tr>
             {% endfor %}

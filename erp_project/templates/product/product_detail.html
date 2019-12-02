@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block search %}
+<h1>商品详情</h1>
+{% endblock %}
+
+{% block body %}
+<div style="margin-left: 1%; margin-top: 1%"  class="row">
+  <div style="height: 100%; width: 100%" class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img class="img-circle" style="width: 100% \9;" src="/media/{{ product.image }}">
+      <div class="caption">
+        <hr>
+        <h1>商品名称: {{ product.name }}</h1>
+        <hr>
+        <h3>商品简介: {{ product.info }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
