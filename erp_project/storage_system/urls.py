@@ -15,7 +15,6 @@ urlpatterns = [
     url(r'^create_product$', views.create_product, name='create_product'),
     url(r'^product_search/$', views.product_search, name='product_search'),
     url(r'^sold_project', views.sold_project, name='sold_project'),
-    url(r'^update_product', views.update_product, name='update_product'),
-    url(r'^project_detail/(?P<pid>\d+)$', views.project_detail, name='project_detail'),
-
+    url(r'^product_detail/(?P<pid>\d+)/$', views.product_detail, name='product_detail'),
+    url(r'^product_update/(?P<pid>\d+)/$', views.product_update, name='product_update')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

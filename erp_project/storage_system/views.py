@@ -1,11 +1,8 @@
-import json
-
-from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from .models import Customer, Product, Status
+from .models import Customer, Product, Status, Category
 from .forms import CustomForm, ProductForm
 
 
@@ -73,7 +70,6 @@ def create_product(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
-            img = product_form.cleaned_data
             product_form.save()
             return redirect('/product_list')
         else:
@@ -105,14 +101,35 @@ def product_search(request):
     return render(request, 'product/product_result.html', {'custom': custom})
 
 
-def update_product(request):
-    pass
-
-
 def sold_project(request):
     pass
 
 
-def project_detail(request, pid):
+def product_detail(request, pid):
     product = Product.objects.get(id=pid)
     return render(request, 'product/product_detail.html', {'product': product})
+
+
+def product_update(request, pid):
+    product = Product.objects.get(id=pid)
+    status = Status.objects.all()
+    category = Category.objects.all()
+    if request.method == "GET":
+        return render(request, "product/product_update.html", {'product': product,
+                                                               'status': status,
+                                                               'category': category})
+    else:
+        data = request.POST
+        product.name = data['name']
+        product.price = data['price']
+        try:
+            product.image = request.FILES['image']
+        except:
+            pass
+        # # product.status = data['status']
+        # # product.category = data['category']
+        product.storage = data['storage']
+        product.save()
+        return redirect('/product_detail/{}'.format(pid))
+
+

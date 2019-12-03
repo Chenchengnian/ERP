@@ -17,7 +17,11 @@ class Tag(models.Model):
 
 
 class Status(models.Model):
-    status = models.CharField(max_length=32, verbose_name='状态')
+    choices = (('未入库', '未入库'),
+               ('已入库', '已入库'),
+               ('需补货', '需补货'),
+               ('已出售', '已出售'))
+    status = models.CharField(max_length=32, choices=choices, verbose_name='状态')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')
     is_delete = models.BooleanField(default=False, verbose_name='是否删除')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')

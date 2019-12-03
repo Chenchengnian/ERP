@@ -35,7 +35,6 @@
                 <th>商品价格</th>
                 <th>商品图片</th>
                 <th>商品状态</th>
-                <th>购买/预定人</th>
                 <th>商品分类</th>
                 <th>库存数量</th>
                 <th>操作</th>
@@ -58,15 +57,14 @@
                       </div>
                     </div>
                 <td>{{ p.status }}</td>
-                {% if p.purchaser == None %}
-                <td>无</td>
-                {% else %}
-                <td>{{ p.sale_date }}</td>
-                {% endif %}
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
                 <td>
-                    <a name="{{ p.id }}" href="{% url 'storage_system:project_detail' p.id %}">查看详情</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_detail' p.id %}">查看详情</a>
+                    <span>|</span>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">更新信息</a>
+                    <span>|</span>
+                    <a href="#">销货</a>
                 </td>
             </tr>
             {% endfor %}

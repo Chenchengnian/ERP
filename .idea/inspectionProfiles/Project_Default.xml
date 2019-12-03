@@ -7,6 +7,7 @@
           <option value="erp_project.storage_system.models.Customer.objects" />
           <option value="erp_project.storage_system.models.Product.objects" />
           <option value="erp_project.storage_system.models.Status.objects" />
+          <option value="erp_project.storage_system.models.Category.objects" />
         </list>
       </option>
     </inspection_tool>

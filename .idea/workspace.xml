@@ -2,22 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/timg.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/product_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/pbr.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/PyMySQL-0.9.3.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/pymysql/_auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/pymysql/protocol.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/media/product/我的正.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/media/product/身份证反面_hw2HVLC.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/media/product/银行卡.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/media/product/门头照.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/product_update.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ipoms/crons.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/PKG-INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/SOURCES.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/dependency_links.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/installed-files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/requires.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab-0.7.1-py3.7.egg-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/app_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/crontab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/management/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/management/commands/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/management/commands/crontab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python/lib/python3.7/site-packages/django_crontab/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/erp_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/erp_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0002_auto_20191126_1753.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +42,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -48,19 +62,19 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
-      <recent name="$PROJECT_DIR$/erp_project/templates" />
-      <recent name="$PROJECT_DIR$/erp_project/storage_system/static/js" />
-      <recent name="$PROJECT_DIR$/erp_project/static" />
-      <recent name="$PROJECT_DIR$/erp_project/static/bootstrap" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/erp_project/storage_system/media/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
       <recent name="$PROJECT_DIR$/erp_project" />
       <recent name="$PROJECT_DIR$/erp_project/erp_project" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates" />
+      <recent name="$PROJECT_DIR$/erp_project/storage_system/static/js" />
+      <recent name="$PROJECT_DIR$/erp_project/static" />
+      <recent name="$PROJECT_DIR$/erp_project/static/bootstrap" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -75,28 +89,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tests">
-    <configuration name="QtTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="ERP" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/QtTest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.crons">
     <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ERP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -110,6 +103,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/erp_project/storage_system/api.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="crons" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="ERP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ipoms" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ipoms/crons.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.crons" />
         <item itemvalue="Python.tests" />
         <item itemvalue="Python.settings" />
         <item itemvalue="Python.views" />
         <item itemvalue="Python.api" />
-        <item itemvalue="Python.QtTest" />
       </list>
     </recent_temporary>
   </component>
