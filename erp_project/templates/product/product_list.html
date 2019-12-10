@@ -21,6 +21,7 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="bs-example" data-example-id="panel-without-body-with-table">
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -49,7 +50,7 @@
 
 <!--                <td><a href="/media/{{ p.image }}/" data-target=".bs-example-modal-lg">查看图片</a></td>-->
 
-                <td><div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#">查看图片</a></div></td>
+                <td><div data-toggle="modal" data-target=".bs-example-modal-lg"><img src="media/{{ p.image }}"></div></td>
 
                     <div class="modal fade bs-example-modal-lg" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true">
@@ -64,7 +65,7 @@
                     <span>|</span>
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">更新信息</a>
                     <span>|</span>
-                    <a href="#">销货</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_sold' p.id %}">商品销货</a>
                 </td>
             </tr>
             {% endfor %}

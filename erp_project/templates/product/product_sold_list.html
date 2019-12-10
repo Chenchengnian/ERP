@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block search %}
+
+<!-- Topbar Search -->
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/custom_search/">
+      {% csrf_token %}
+    <div class="input-group">
+        <div class="input-group-append">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block body %}
+<div class="bs-example" data-example-id="panel-without-body-with-table">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="font-size: 20px">商品销售列表</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>商品图片</th>
+                <th>商品状态</th>
+                <th>购买/预定人</th>
+                <th>商品分类</th>
+                <th>出售时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in product %}
+            <tr>
+                <th scope="row">{{ p.id }}</th>
+                <td>{{ p.name }}</td>
+                <td>{{ p.price }}</td>
+                <td>{{ p.image }}</td>
+                <td>{{ p.status }}</td>
+                <td>{{ p.purchaser }}</td>
+                <td>{{ p.category }}</td>
+                <td>{{ p.sale_date }}</td>
+                <td>
+                    <a href="#">修改</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% ifequal count 0 %}
+    <h1 style="text-align: center; line-height: 400px">当前暂无已售商品</h1>
+    {% endifequal %}
+</div>
+{% endblock %}

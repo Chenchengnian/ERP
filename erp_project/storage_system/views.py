@@ -1,3 +1,4 @@
+import os
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -45,7 +46,7 @@ def product_sold_list(request):
     except:
         product = ''
         count = 0
-    return render(request, 'product/product_sold.html', {'product': product,
+    return render(request, 'product/product_sold_list.html', {'product': product,
                                                          'count': count})
 
 
@@ -101,10 +102,6 @@ def product_search(request):
     return render(request, 'product/product_result.html', {'custom': custom})
 
 
-def sold_project(request):
-    pass
-
-
 def product_detail(request, pid):
     product = Product.objects.get(id=pid)
     return render(request, 'product/product_detail.html', {'product': product})
@@ -119,6 +116,34 @@ def product_update(request, pid):
                                                                'status': status,
                                                                'category': category})
     else:
+        pre_img = str(product.image)
+        img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+        data = request.POST
+        product.name = data['name']
+        product.price = data['price']
+        try:
+            product.image = request.FILES['image']
+            flag_img = 1
+        except:
+            flag_img = 0
+        product.status_status = data['status']
+        product.category_name = data['category']
+        product.storage = data['storage']
+        product.save(force_update=True)
+        if flag_img == 1 and os.path.exists(img_path):
+            os.remove(img_path)
+        return redirect('/product_detail/{}'.format(pid))
+
+
+def product_sold(request, pid):
+    product = Product.objects.get(id=pid)
+    status = Status.objects.all()
+    category = Category.objects.all()
+    if request.method == "GET":
+        return render(request, "product/product_sold.html", {'product': product,
+                                                             'status': status,
+                                                             'category': category})
+    else:
         data = request.POST
         product.name = data['name']
         product.price = data['price']
@@ -126,10 +151,9 @@ def product_update(request, pid):
             product.image = request.FILES['image']
         except:
             pass
-        # # product.status = data['status']
-        # # product.category = data['category']
+        product.status_status = data['status']
+        product.category_name = data['category']
         product.storage = data['storage']
-        product.save()
+        product.save(force_update=True)
         return redirect('/product_detail/{}'.format(pid))
-
 
