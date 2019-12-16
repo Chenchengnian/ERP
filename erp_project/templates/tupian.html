@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    .dialog-mask {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background: rgba(0,0,0,0.65);
+    }
+    .dialog-conent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 200px;
+    }
+    .dialog-conent img {
+      width: 100%;
+    }
+  </style>
+  <script>
+    function show() {
+      document.getElementById("dialog-img").style.display = 'block';
+    }
+    function hide() {
+      document.getElementById("dialog-img").style.display = 'none';
+    }
+  </script>
+</head>
+<body>
+  <div onclick="show()">查看图片</div>
+  <div class="dialog-mask" id="dialog-img" onclick="hide()">
+    <div class="dialog-conent">
+      <img src="https://images.unsplash.com/photo-1570257374937-1d2db29c7f12?ixlib=rb-1.2.1&q=99&fm=jpg&crop=entropy&cs=tinysrgb&w=2048&fit=max&ixid=eyJhcHBfaWQiOjcwOTV9" />
+    </div>
+  </div>
+</body>
+</html>

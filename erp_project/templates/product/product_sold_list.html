@@ -40,7 +40,26 @@
             </tr>
             </thead>
             <tbody>
-            {% for p in product %}
+            {% for p in sold %}
+            <script>
+                function show{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'block';
+                }
+                function hide{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'none';
+                }
+                </script>
+            {% endfor %}
+            {% for p in sold %}
+            <tr>
+                <th scope="row">{{ p.id }}</th>
+                <td>{{ p.name }}</td>
+                <td>{{ p.price }}</td>
+                <td>
+                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ p.id }}()">查看图片</a>
+                    </div>
+                </td>
+
             <tr>
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>

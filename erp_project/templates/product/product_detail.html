@@ -8,9 +8,10 @@
 
 {% block body %}
 <div style="margin-left: 1%; margin-top: 1%"  class="row">
-  <div style="height: 100%; width: 100%" class="col-sm-6 col-md-4">
+  <div  class="col-sm-6 col-md-4">
     <div class="thumbnail">
-      <img class="img-circle" style="width: 100% \9;" src="/media/{{ product.image }}">
+      <div style="height: 400px; width: 400px"><img style="height: 100%; width: 100%" src="/media/{{ product.image }}"></div>
+
       <div class="caption">
         <hr>
         <h1>商品名称: {{ product.name }}</h1>

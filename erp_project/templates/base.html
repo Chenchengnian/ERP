@@ -24,36 +24,64 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,
   600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <style type="text/css">
-input{
-    margin: 0 auto;
-    padding: 0 10px;
-    outline-style: none ;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 13px 14px;
-    width: 450px;
-    height: 50px;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: "Microsoft soft";
-    background-color:rgba(241,241,241,.98);
-}
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    .dialog-mask {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background: rgba(0,0,0,0.65);
+    }
+    .dialog-conent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 200px;
+    }
+    .dialog-conent img {
+      width: 100%;
+    }
 
-input:focus{
-    border-color: #66afe9;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
-}
+    input{
+        margin: 0 auto;
+        padding: 0 10px;
+        outline-style: none ;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 13px 14px;
+        width: 450px;
+        height: 50px;
+        font-size: 14px;
+        font-weight: 700;
+        font-family: "Microsoft soft";
+        background-color:rgba(241,241,241,.98);
+    }
 
-textarea {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background-color:rgba(241,241,241,.98);
-    width: 450px;
-    height: 100px;
-    padding: 10px;
-    resize: none;"
+    input:focus{
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+    }
+
+    textarea {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color:rgba(241,241,241,.98);
+        width: 450px;
+        height: 100px;
+        padding: 10px;
+        resize: none;"
     </style>
 
     <!-- js -->
@@ -75,7 +103,7 @@ textarea {
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">留琛金玉之盟 <sup>☺</sup></div>
+            <div class="sidebar-brand-text mx-3">留琛金玉之盟</div>
         </a>
 
         <!-- Divider -->
@@ -382,5 +410,6 @@ textarea {
 
 <!-- Page level custom scripts -->
 <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
 </body>
 </html>

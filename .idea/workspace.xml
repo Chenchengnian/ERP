@@ -2,22 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/huaxia-22.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0002_auto_20191209_1835.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0003_auto_20191209_1853.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/media/product/我的反.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/templates/tupian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/timg.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/我的正.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/身份证反面.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/身份证反面_hw2HVLC.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/银行卡.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0002_auto_20191209_1835.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0003_auto_20191209_1853.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

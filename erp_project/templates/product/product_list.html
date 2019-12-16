@@ -38,28 +38,40 @@
                 <th>商品状态</th>
                 <th>商品分类</th>
                 <th>库存数量</th>
+                <th>入库时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             {% for p in product %}
+            <script>
+                function show{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'block';
+                }
+                function hide{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'none';
+                }
+                </script>
+            {% endfor %}
+            {% for p in product %}
             <tr>
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-
-<!--                <td><a href="/media/{{ p.image }}/" data-target=".bs-example-modal-lg">查看图片</a></td>-->
-
-                <td><div data-toggle="modal" data-target=".bs-example-modal-lg"><img src="media/{{ p.image }}"></div></td>
-
-                    <div class="modal fade bs-example-modal-lg" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true">
-                            <img src="media/{{ p.image }}">
-                      </div>
+                <td>
+                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ p.id }}()">查看图片</a>
                     </div>
+                </td>
+                <div class="dialog-mask" id="dialog-img{{ p.id }}" onclick="hide{{ p.id }}()">
+                    <div class="dialog-conent">
+                        <img src="/media/{{ p.image }}/">
+                    </div>
+                </div>
+
                 <td>{{ p.status }}</td>
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
+                <td>{{ p.created_time }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_detail' p.id %}">查看详情</a>
                     <span>|</span>

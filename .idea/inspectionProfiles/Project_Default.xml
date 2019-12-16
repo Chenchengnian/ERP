@@ -8,6 +8,7 @@
           <option value="erp_project.storage_system.models.Product.objects" />
           <option value="erp_project.storage_system.models.Status.objects" />
           <option value="erp_project.storage_system.models.Category.objects" />
+          <option value="erp_project.storage_system.models.Sold.objects" />
         </list>
       </option>
     </inspection_tool>

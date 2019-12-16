@@ -1,9 +1,11 @@
 import os
+import time
+
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from .models import Customer, Product, Status, Category
+from .models import Customer, Product, Status, Category, Sold
 from .forms import CustomForm, ProductForm
 
 
@@ -39,15 +41,11 @@ def product_list(request):
 
 
 def product_sold_list(request):
-    try:
-        get_sold_status = Status.objects.get(status='已销售')
-        product = Product.objects.filter(status=get_sold_status).order_by('-created_time')
-        count = product.count()
-    except:
-        product = ''
-        count = 0
-    return render(request, 'product/product_sold_list.html', {'product': product,
-                                                         'count': count})
+
+    sold = Sold.objects.all().order_by('-created_time')
+    count = sold.count()
+    return render(request, 'product/product_sold_list.html', {'sold': sold,
+                                                              'count': count})
 
 
 def create_custom(request):
@@ -137,23 +135,37 @@ def product_update(request, pid):
 
 def product_sold(request, pid):
     product = Product.objects.get(id=pid)
-    status = Status.objects.all()
-    category = Category.objects.all()
+    custom = Customer.objects.all()
+    name_list = []
+    for name in custom:
+        name_list.append(name.username)
     if request.method == "GET":
         return render(request, "product/product_sold.html", {'product': product,
-                                                             'status': status,
-                                                             'category': category})
+                                                             'custom_list': custom})
     else:
         data = request.POST
-        product.name = data['name']
-        product.price = data['price']
-        try:
-            product.image = request.FILES['image']
-        except:
-            pass
-        product.status_status = data['status']
-        product.category_name = data['category']
-        product.storage = data['storage']
-        product.save(force_update=True)
-        return redirect('/product_detail/{}'.format(pid))
+        if data['custom'] not in name_list:
+            new_custom = Customer.objects.create(username=data['custom'])
+            new_custom.save()
+        if int(data['storage']) <= int(product.storage):
+            sold = Sold.objects.create(name=product.name,
+                                       price=product.price,
+                                       sold_price=data['price'],
+                                       category=product.category,
+                                       storage=data['storage'])
+            sold.sale_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            sold.image = product.image
+            sold.sold_purchaser = data['custom']
+            sold.save()
+            print(data['custom'], '1111111111')
+            storage = int(product.storage) - int(data['storage'])
+            product.storage = storage
+            product.save()
+
+            return redirect('/product_sold_list/')
+        else:
+            return HttpResponse("kucunbuzu")  # todo
+
+
+
 
