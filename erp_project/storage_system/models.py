@@ -58,7 +58,7 @@ class Customer(models.Model):
     username = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='顾客姓名')
     cellphone = models.CharField(max_length=200, verbose_name='顾客电话')
     wechat = models.CharField(max_length=200, verbose_name='顾客微信')
-    birthday = models.DateField(blank=True, null=True, verbose_name='顾客生日,格式:1999-01-01')
+    birthday = models.DateField(blank=True, verbose_name='顾客生日,格式:1999-01-01')
     address = models.CharField(max_length=200, verbose_name='顾客地址')
     user_info = models.TextField(verbose_name='顾客信息', blank=True, null=True)
     tag = models.ManyToManyField(Tag, blank=True, verbose_name='标签')

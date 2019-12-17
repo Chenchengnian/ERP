@@ -2,28 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/我的正.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/sold_product_update.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/sold_product_result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/erp_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/erp_project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/custom/门头照.png" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/media/custom/default.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/custom/门头照_8c3iDmc.png" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/media/product/default.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/custom/门头照_ZD1S6bU.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/custom/门头照_eSlWM1m.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/custom/门头照_jYH7RWY.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/huaxia-22.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/我的反.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/门头照.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/create_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/create_product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/custom/custom_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/custom/custom_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_update.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -50,7 +39,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/erp_project/media/sold_product" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/erp_project/templates/product" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
@@ -62,9 +51,9 @@
       <recent name="$PROJECT_DIR$/erp_project/erp_project" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
       <recent name="$PROJECT_DIR$/erp_project/media/sold_product" />
       <recent name="$PROJECT_DIR$/erp_project/media/custom" />
-      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates" />
       <recent name="$PROJECT_DIR$/erp_project/storage_system/static/js" />
     </key>
@@ -81,7 +70,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.crons">
+  <component name="RunManager" selected="Python.tests">
     <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ERP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -189,10 +178,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.crons" />
         <item itemvalue="Python.tests" />
-        <item itemvalue="Python.settings" />
         <item itemvalue="Python.views" />
+        <item itemvalue="Python.crons" />
+        <item itemvalue="Python.settings" />
         <item itemvalue="Python.api" />
       </list>
     </recent_temporary>

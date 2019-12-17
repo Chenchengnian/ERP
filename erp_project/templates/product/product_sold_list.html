@@ -5,13 +5,13 @@
 {% block search %}
 
 <!-- Topbar Search -->
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/custom_search/">
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/sold_product_search/">
       {% csrf_token %}
     <div class="input-group">
         <div class="input-group-append">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
+            <input type="text" style="height: 30px" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
             <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
+                <i class="fas fa-search fa-sm" ></i>
             </button>
         </div>
     </div>
@@ -22,7 +22,7 @@
 <div class="bs-example" data-example-id="panel-without-body-with-table">
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading" style="font-size: 20px">商品销售列表</div>
+        <div class="panel-heading" style="font-size: 20px">{{ date }}商品销售列表</div>
 
         <!-- Table -->
         <table class="table">
@@ -71,7 +71,7 @@
                 <td>{{ p.category }}</td>
                 <td>{{ p.sale_date }}</td>
                 <td>
-                    <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}">修改信息</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}" >修改信息</a>
                 </td>
             </tr>
             {% endfor %}

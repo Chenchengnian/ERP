@@ -9,17 +9,17 @@
         <div class="panel-heading" style="font-size: 20px">搜索结果</div>
 
         <!-- Table -->
-         <table class="table">
+        <table class="table">
             <thead>
             <tr>
                 <th>序号</th>
                 <th>商品名称</th>
                 <th>商品价格</th>
                 <th>商品图片</th>
-<!--                <th>商品状态</th>-->
+                <th>商品状态</th>
+                <th>购买/预定人</th>
                 <th>商品分类</th>
                 <th>库存数量</th>
-                <th>入库时间</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -32,7 +32,8 @@
                 function hide{{ p.id }}() {
                   document.getElementById("dialog-img{{ p.id }}").style.display = 'none';
                 }
-                </script>
+
+            </script>
             {% endfor %}
             {% for p in product %}
             <tr>
@@ -48,21 +49,20 @@
                         <img src="/media/{{ p.image }}/">
                     </div>
                 </div>
-
-<!--                <td>{{ p.status }}</td>-->
+                <td>{{ p.status }}</td>
+                {% if p.purchaser == None %}
+                <td>无</td>
+                {% else %}
+                <td>{{ p.sale_date }}</td>
+                {% endif %}
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
-                <td>{{ p.created_time }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_detail' p.id %}">查看详情</a>
                     <span>|</span>
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">修改信息</a>
                     <span>|</span>
-                    {% ifequal p.storage 0 %}
-                    <a style="color: red" name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">需要补货</a>
-                    {% else %}
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_sold' p.id %}">商品销货</a>
-                    {% endifequal %}
                 </td>
             </tr>
             {% endfor %}
@@ -75,9 +75,9 @@
                 setInterval("refer()", 1000); //启动1秒定时
                 function refer() {
                     if (t == 0){
-                        location = "/product_list"; //跳转的地址
+                        location = "/product_sold_list"; //跳转的地址
                     }
-                    document.getElementById('show').innerHTML = "没有搜索到你想要的商品信息," + t + "秒后跳转回商品列表页"; // 显示倒计时
+                    document.getElementById('show').innerHTML = "没有搜索到你想要的销售商品信息," + t + "秒后跳转回商品列表页"; // 显示倒计时
                     t--; // 计数器递减
                 }
 
