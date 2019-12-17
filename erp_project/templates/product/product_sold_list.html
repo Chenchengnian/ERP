@@ -31,6 +31,7 @@
                 <th>序号</th>
                 <th>商品名称</th>
                 <th>商品价格</th>
+                <th>销售数量</th>
                 <th>商品图片</th>
                 <th>商品状态</th>
                 <th>购买/预定人</th>
@@ -55,22 +56,22 @@
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-                <td>
+                <td>{{ p.storage }}</td>
+                 <td>
                     <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ p.id }}()">查看图片</a>
                     </div>
                 </td>
-
-            <tr>
-                <th scope="row">{{ p.id }}</th>
-                <td>{{ p.name }}</td>
-                <td>{{ p.price }}</td>
-                <td>{{ p.image }}</td>
-                <td>{{ p.status }}</td>
+                <div class="dialog-mask" id="dialog-img{{ p.id }}" onclick="hide{{ p.id }}()">
+                    <div class="dialog-conent">
+                        <img src="/media/{{ p.image }}/">
+                    </div>
+                </div>
+                <td>已出售</td>
                 <td>{{ p.purchaser }}</td>
                 <td>{{ p.category }}</td>
                 <td>{{ p.sale_date }}</td>
                 <td>
-                    <a href="#">修改</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}">修改信息</a>
                 </td>
             </tr>
             {% endfor %}

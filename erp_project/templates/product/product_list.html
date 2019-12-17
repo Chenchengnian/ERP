@@ -35,7 +35,7 @@
                 <th>商品名称</th>
                 <th>商品价格</th>
                 <th>商品图片</th>
-                <th>商品状态</th>
+<!--                <th>商品状态</th>-->
                 <th>商品分类</th>
                 <th>库存数量</th>
                 <th>入库时间</th>
@@ -68,16 +68,20 @@
                     </div>
                 </div>
 
-                <td>{{ p.status }}</td>
+<!--                <td>{{ p.status }}</td>-->
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
                 <td>{{ p.created_time }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_detail' p.id %}">查看详情</a>
                     <span>|</span>
-                    <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">更新信息</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">修改信息</a>
                     <span>|</span>
+                    {% ifequal p.storage 0 %}
+                    <a style="color: red" name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">需要补货</a>
+                    {% else %}
                     <a name="{{ p.id }}" href="{% url 'storage_system:product_sold' p.id %}">商品销货</a>
+                    {% endifequal %}
                 </td>
             </tr>
             {% endfor %}

@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^product_search/$', views.product_search, name='product_search'),
     url(r'^product_sold/(?P<pid>\d+)/$', views.product_sold, name='product_sold'),
     url(r'^product_detail/(?P<pid>\d+)/$', views.product_detail, name='product_detail'),
-    url(r'^product_update/(?P<pid>\d+)/$', views.product_update, name='product_update')
+    url(r'^product_update/(?P<pid>\d+)/$', views.product_update, name='product_update'),
+    url(r'^sold_product_update/(?P<pid>\d+)/$', views.sold_product_update, name='sold_product_update')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

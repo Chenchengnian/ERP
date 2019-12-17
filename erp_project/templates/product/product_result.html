@@ -24,12 +24,31 @@
             </tr>
             </thead>
             <tbody>
-            {% for c in custom %}
+            {% for p in product %}
+            <script>
+                function show{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'block';
+                }
+                function hide{{ p.id }}() {
+                  document.getElementById("dialog-img{{ p.id }}").style.display = 'none';
+                }
+
+            </script>
+            {% endfor %}
+            {% for p in product %}
             <tr>
-               <th scope="row">{{ p.id }}</th>
+                <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
-                <td><img style="height: 80px; weight: 80px" src="/product/陈承念.jpg"></td>
+                <td>
+                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ p.id }}()">查看图片</a>
+                    </div>
+                </td>
+                <div class="dialog-mask" id="dialog-img{{ p.id }}" onclick="hide{{ p.id }}()">
+                    <div class="dialog-conent">
+                        <img src="/media/{{ p.image }}/">
+                    </div>
+                </div>
                 <td>{{ p.status }}</td>
                 {% if p.purchaser == None %}
                 <td>无</td>
@@ -39,8 +58,11 @@
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
                 <td>
-                    <a class="{{ p.id }}" href="/sold_product">修改</a>
-                    <a class="{{ p.id }}" href="#">销货</a>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_detail' p.id %}">查看详情</a>
+                    <span>|</span>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_update' p.id %}">修改信息</a>
+                    <span>|</span>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:product_sold' p.id %}">商品销货</a>
                 </td>
             </tr>
             {% endfor %}
@@ -58,7 +80,8 @@
                     document.getElementById('show').innerHTML = "没有搜索到你想要的商品信息," + t + "秒后跳转回商品列表页"; // 显示倒计时
                     t--; // 计数器递减
                 }
-            </script>
+
+    </script>
     <div style="padding-left: 20%; font-size: 30px" id="show"></div>
     {% endifequal %}
 </div>

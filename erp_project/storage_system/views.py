@@ -1,12 +1,11 @@
 import os
 import time
-
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .models import Customer, Product, Status, Category, Sold
-from .forms import CustomForm, ProductForm
+from .forms import CustomForm
 
 
 def get_customer():
@@ -66,20 +65,31 @@ def create_custom(request):
 
 
 def create_product(request):
+    category = Category.objects.all()
+    category_list = []
+    for cate in category:
+        category_list.append(cate.name)
     if request.method == 'POST':
-        product_form = ProductForm(request.POST, request.FILES)
-        if product_form.is_valid():
-            product_form.save()
-            return redirect('/product_list')
-        else:
-            return HttpResponse("表单内容有误，请重新填写。")
+        data = request.POST
+        try:
+            image = request.FILES['image']
+        except:
+            image = 'media/product/default.png'
+        if data['category'] not in category_list:
+            new_category = Category.objects.create(name=data['category'])
+            new_category.save()
+        category_id = Category.objects.get(name=data['category']).id
+        product = Product.objects.create(name=data['name'],
+                                         price=data['price'],
+                                         image=image,
+                                         storage=data['storage'],
+                                         status_id=data['status'],
+                                         category_id=category_id,
+                                         info=data['info'])
+        product.save(force_update=True)
+        return redirect('/product_list')
     else:
-        # 创建表单类实例
-        product_form = ProductForm()
-        # 赋值上下文
-        context = {'product_form': product_form}
-        # 返回模板
-        return render(request, 'product/create_product.html', context)
+        return render(request, 'product/create_product.html', {'category': category})
 
 
 def custom_search(request):
@@ -93,11 +103,11 @@ def custom_search(request):
 
 def product_search(request):
     q = request.POST.get('keyword', '')
-    custom = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q))
-    count = custom.count()
+    product = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q))
+    count = product.count()
     if count == 0:
         return render(request, 'product/product_result.html', {'count': count})
-    return render(request, 'product/product_result.html', {'custom': custom})
+    return render(request, 'product/product_result.html', {'product': product})
 
 
 def product_detail(request, pid):
@@ -114,9 +124,15 @@ def product_update(request, pid):
                                                                'status': status,
                                                                'category': category})
     else:
+        data = request.POST
+        category_list = []
+        for cate in category:
+            category_list.append(cate.name)
+        if data['category'] not in category_list:
+            new_category = Category.objects.create(name=data['category'])
+            new_category.save()
         pre_img = str(product.image)
         img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
-        data = request.POST
         product.name = data['name']
         product.price = data['price']
         try:
@@ -124,8 +140,8 @@ def product_update(request, pid):
             flag_img = 1
         except:
             flag_img = 0
-        product.status_status = data['status']
-        product.category_name = data['category']
+        product.status_id = data['status']
+        product.category_id = Category.objects.get(name=data['category']).id
         product.storage = data['storage']
         product.save(force_update=True)
         if flag_img == 1 and os.path.exists(img_path):
@@ -147,24 +163,53 @@ def product_sold(request, pid):
         if data['custom'] not in name_list:
             new_custom = Customer.objects.create(username=data['custom'])
             new_custom.save()
-        if int(data['storage']) <= int(product.storage):
-            sold = Sold.objects.create(name=product.name,
-                                       price=product.price,
-                                       sold_price=data['price'],
-                                       category=product.category,
-                                       storage=data['storage'])
-            sold.sale_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            sold.image = product.image
-            sold.sold_purchaser = data['custom']
-            sold.save()
-            print(data['custom'], '1111111111')
-            storage = int(product.storage) - int(data['storage'])
-            product.storage = storage
-            product.save()
+        purchase_id = Customer.objects.get(username=data['custom']).id
+        sold = Sold.objects.create(name=product.name,
+                                   price=product.price,
+                                   sold_price=data['price'],
+                                   category=product.category,
+                                   storage=data['storage'],
+                                   image=product.image,
+                                   purchaser_id=purchase_id,
+                                   sale_date=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        sold.save(force_update=True)
+        storage = int(product.storage) - int(data['storage'])
+        product.storage = storage
+        product.save()
+        return redirect('/product_sold_list/')
 
-            return redirect('/product_sold_list/')
-        else:
-            return HttpResponse("kucunbuzu")  # todo
+
+def sold_product_update(request, pid):
+    product = Sold.objects.get(id=pid)
+    category = Category.objects.all()
+    custom = Customer.objects.all()
+    if request.method == "GET":
+        return render(request, "product/sold_product_update.html", {'product': product,
+                                                                    'category': category,
+                                                                    'custom': custom})
+    else:
+        data = request.POST
+        category_list = []
+        for cate in category:
+            category_list.append(cate.name)
+        if data['category'] not in category_list:
+            new_category = Category.objects.create(name=data['category'])
+            new_category.save()
+        pre_img = str(product.image)
+        img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+        product.name = data['name']
+        product.price = data['price']
+        try:
+            product.image = request.FILES['image']
+            flag_img = 1
+        except:
+            flag_img = 0
+        product.category_name = data['category']
+        product.storage = data['storage']
+        product.save(force_update=True)
+        if flag_img == 1 and os.path.exists(img_path):
+            os.remove(img_path)
+        return redirect('/product_sold_list/')
 
 
 

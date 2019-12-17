@@ -77,7 +77,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'NAME': 'lc_erp',  # 数据库名称
+        'NAME': 'lc_erp1',  # 数据库名称
         'USER': 'root',  # 用户名
         'PASSWORD': 'chenchengnian',  # 密码
         'HOST': '127.0.0.1',  # 主机IP地址
