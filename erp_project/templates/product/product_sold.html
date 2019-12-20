@@ -47,7 +47,7 @@
     <label for="id_storage">销售数量:</label>
     <div class="form-group">
         <label><input type="number" name="storage" required="" id="id_storage" autocomplete="off"
-                      oninput="if(value>{{ product.storage }})value={{ product.storage}};if(value<1)value=1" placeholder="请输入销售数量"></label>
+                      oninput="if(value>{{ product.storage }})value={{ product.storage}};if(value<0)value=1;if(value==0)value=''" placeholder="请输入销售数量"></label>
 
         <br>
     </div>

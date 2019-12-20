@@ -4,25 +4,14 @@
 
 {% block search %}
 
-<!-- Topbar Search -->
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/sold_product_search/">
-      {% csrf_token %}
-    <div class="input-group">
-        <div class="input-group-append">
-            <input type="text" style="height: 30px" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm" ></i>
-            </button>
-        </div>
-    </div>
-</form>
 {% endblock %}
 
 {% block body %}
+
 <div class="bs-example" data-example-id="panel-without-body-with-table">
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading" style="font-size: 20px">{{ date }}商品销售列表</div>
+        <div class="panel-heading" style="font-size: 20px">商品信息列表</div>
 
         <!-- Table -->
         <table class="table">
@@ -30,18 +19,16 @@
             <tr>
                 <th>序号</th>
                 <th>商品名称</th>
-                <th>商品售价</th>
-                <th>销售数量</th>
+                <th>购买价格</th>
                 <th>商品图片</th>
-                <th>商品状态</th>
-                <th>购买/预定人</th>
                 <th>商品分类</th>
-                <th>出售时间</th>
+                <th>购买数量</th>
+                <th>购买时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            {% for p in sold %}
+            {% for p in product %}
             <script>
                 function show{{ p.id }}() {
                   document.getElementById("dialog-img{{ p.id }}").style.display = 'block';
@@ -51,13 +38,12 @@
                 }
                 </script>
             {% endfor %}
-            {% for p in sold %}
+            {% for p in product %}
             <tr>
                 <th scope="row">{{ p.id }}</th>
                 <td>{{ p.name }}</td>
-                <td>{{ p.sold_price }}</td>
-                <td>{{ p.storage }}</td>
-                 <td>
+                <td>{{ p.price }}</td>
+                <td>
                     <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ p.id }}()">查看图片</a>
                     </div>
                 </td>
@@ -66,10 +52,10 @@
                         <img src="/media/{{ p.image }}/">
                     </div>
                 </div>
-                <td>已出售</td>
-                <td>{{ p.purchaser }}</td>
+
                 <td>{{ p.category }}</td>
-                <td>{{ p.sale_date }}</td>
+                <td>{{ p.storage }}</td>
+                <td>{{ p.created_time }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}" >修改信息</a>
                 </td>
@@ -79,7 +65,7 @@
         </table>
     </div>
     {% ifequal count 0 %}
-    <h1 style="text-align: center; line-height: 400px">当前暂无已售商品</h1>
+    <h1 style="text-align: center; line-height: 400px">当前没有商品,快去<a href="/create_product">添加</a>吧</h1>
     {% endifequal %}
 </div>
 {% endblock %}

@@ -30,19 +30,43 @@
             <tr>
                 <th>序号</th>
                 <th>姓名</th>
+                <th>照片</th>
                 <th>电话</th>
                 <th>生日</th>
                 <th>地址</th>
+                <th>操作</th>
             </tr>
             </thead>
+             {% for c in custom %}
+            <script>
+                function show{{ c.id }}() {
+                  document.getElementById("dialog-img{{ c.id }}").style.display = 'block';
+                }
+                function hide{{ c.id }}() {
+                  document.getElementById("dialog-img{{ c.id }}").style.display = 'none';
+                }
+                </script>
+            {% endfor %}
             <tbody>
             {% for c in custom %}
             <tr>
                 <th scope="row">{{ c.id }}</th>
                 <td>{{ c.username }}</td>
+                <td>
+                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ c.id }}()">查看图片</a>
+                    </div>
+                </td>
+                <div class="dialog-mask" id="dialog-img{{ c.id }}" onclick="hide{{ c.id }}()">
+                    <div class="dialog-conent">
+                        <img src="/media/{{ c.image }}/">
+                    </div>
+                </div>
                 <td>{{ c.cellphone }}</td>
-                <td>{{ c.birthday }}</td>
+                <td>{{ c.birthday|default_if_none:'' }}</td>
                 <td>{{ c.address }}</td>
+                <td>
+                    <a name="{{ c.id }}" href="{% url 'storage_system:custom_update' c.id %}">修改信息</a>
+                </td>
             </tr>
             {% endfor %}
             </tbody>

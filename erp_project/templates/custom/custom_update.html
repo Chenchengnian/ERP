@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block search %}
+<h1>修改顾客信息</h1>
+{% endblock %}
+
+{% block body %}
+<form style="padding-left: 5%"  class="form" action="." method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    <label for="id_username">顾客姓名:</label>
+    <div class="form-group">
+    <label><input type="text" name="username" maxlength="100" required="" id="id_username" value="{{ custom.username }}"></label>
+        <br>
+  </div>
+
+
+  <label for="id_image">顾客图片:</label>
+    <div class="form-group">
+    <label><input type="file" name="image" id="id_image"></label>
+        <br>
+  </div>
+
+
+
+    <label for="id_cellphone">顾客电话:</label>
+    <div class="form-group">
+    <label><input type="number" name="cellphone" maxlength="200" id="id_cellphone" value="{{ custom.cellphone }}" oninput="if(value.length!=11) value=value.slice(0, 11)"></label>
+        <br>
+  </div>
+
+
+
+    <label for="id_wechat">顾客微信:</label>
+    <div class="form-group">
+    <label><input type="text" name="wechat" maxlength="200" id="id_wechat" value="{{ custom.wechat }}"></label>
+        <br>
+  </div>
+
+    <label for="id_birthday">顾客生日,格式:1970-11-11:</label>
+    <div class="form-group">
+    <label id="id_birthday">
+      <input style="width: 145px" type="text" name="year" id="year" required="" oninput="value=value.slice(0,4)" value="{{ year }}">-
+            <input style="width: 145px" type="text" name="month" id="month" required="" max="12" oninput="if(value>12)value=12;value=value.slice(0,2)" value="{{ month }}">-
+            <input style="width: 145px" type="text" name="day" id="day" required="" max="31" oninput="if(value>31)value=31;value=value.slice(0,2)" value="{{ day }}"></label>
+        <br>
+  </div>
+
+
+
+    <label for="id_address">顾客地址:</label>
+    <div class="form-group">
+    <label><input type="text" name="address" maxlength="200" id="id_address" value="{{ custom.address }}"></label>
+        <br>
+  </div>
+
+
+
+    <label for="id_user_info">顾客信息:</label>
+    <div class="form-group">
+    <label><textarea name="user_info" cols="40" rows="10" id="id_user_info" value="{{ custom.user_info }}"></textarea></label>
+        <br>
+  </div>
+
+
+
+  <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认修改</button>
+</form>
+
+{% endblock %}

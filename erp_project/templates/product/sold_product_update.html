@@ -47,7 +47,8 @@
 
     <label for="id_storage">销售数量:</label>
     <div class="form-group">
-        <label><input type="number" name="storage" required="" id="id_storage" value="{{ product.storage }}"></label>
+        <label><input type="number" name="storage" required="" id="id_storage" value="{{ product.storage }}"
+                      oninput="if(value>{{ allow_storage }})value={{ allow_storage }};if(value<0)value=1;if(value==0)value=''"></label>
         <br>
     </div>
 

@@ -3,11 +3,9 @@ import datetime
 import os
 import time
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .models import Customer, Product, Status, Category, Sold
-from .forms import CustomForm
 
 
 def get_customer():
@@ -50,16 +48,28 @@ def get_today():
 
 def index(request):
     product = Product.objects.all().order_by('-created_time')[:5]
+    category = Category.objects.all().order_by('-created_time')[:5]
+    short_storage_product = Product.objects.filter(storage__lte=10).order_by('storage')[:5]
+    custom = Customer.objects.all()
+    ids = ['虚位以待', '虚位以待', '虚位以待', '虚位以待', '虚位以待', '虚位以待']
+    ind = 0
+    for i in custom:
+        ids[ind] = i.username
+        ind += 1
+    data_list = []
+    for c in category:
+        count = Product.objects.filter(category_id=c.id).count()
+        data_list.append([c.name, count, c.id])
     sold_number = Sold.objects.filter(sale_date__contains=get_today()).count()
     today_sold = Sold.objects.filter(sale_date__contains=get_today())
     month_sold = Sold.objects.filter(sale_date__gte=get_month_first_day_and_last_day(get_year(), get_month())[0],
                                      sale_date__lte=get_month_first_day_and_last_day(get_year(), get_month())[1])
     today_earn = month_earn = 0
     for sold in today_sold:
-        today_earn += int(sold.price) * int(sold.storage)
+        today_earn += int(sold.sold_price) * int(sold.storage)
 
     for sold in month_sold:
-        month_earn += int(sold.price) * int(sold.storage)
+        month_earn += int(sold.sold_price) * int(sold.storage)
 
     return render(request, 'index.html', {'month_earn': month_earn,
                                           'today_earn': today_earn,
@@ -68,6 +78,9 @@ def index(request):
                                           'today': get_today(),
                                           'month': get_month(),
                                           'product': product,
+                                          'category': data_list,
+                                          'short_storage_product': short_storage_product,
+                                          'c': ids,
                                           'title': '留琛金玉之盟'
                                           })
 
@@ -112,22 +125,37 @@ def month_sold_list(request):
                                                               'title': '{}月销售商品列表'.format(get_month())})
 
 
+def product_category_list(request, cid):
+    product = Product.objects.filter(category_id=cid)
+    return render(request, 'product/product_category_list.html', {'product': product,
+                                                                  'title': '销售商品列表'})
+
+
 def create_custom(request):
+    custom = Customer.objects.all().order_by('-created_time')
+    name_list = []
+    for c in custom:
+        name_list.append(c.username)
     if request.method == 'POST':
-        custom_form = CustomForm(request.POST, request.FILES)
-        if custom_form.is_valid():
-            custom_form.save()
-            return redirect('/custom_list')
-        else:
-            return HttpResponse("表单内容有误，请重新填写。")
+        data = request.POST
+        if data['username'] in name_list:
+            return render(request, 'repeat.html', {'title': '错误'})
+        try:
+            image = request.FILES['image']
+        except:
+            image = 'media/custom/default.png'
+        birthday = data['year'] + '-' + data['month'] + '-' + data['day']
+        custom = Customer.objects.create(username=data['username'],
+                                         cellphone=data['cellphone'],
+                                         image=image,
+                                         wechat=data['wechat'],
+                                         address=data['address'],
+                                         birthday=birthday,
+                                         user_info=data['user_info'])
+        custom.save(force_update=True)
+        return redirect('/custom_list')
     else:
-        # 创建表单类实例
-        custom_form = CustomForm()
-        # 赋值上下文
-        context = {'custom_form': custom_form,
-                   'title': '新建顾客'}
-        # 返回模板
-        return render(request, 'custom/create_custom.html', context)
+        return render(request, 'custom/create_custom.html', {'title': '顾客录入'})
 
 
 def create_product(request):
@@ -135,15 +163,23 @@ def create_product(request):
     category_list = []
     for cate in category:
         category_list.append(cate.name)
+
+    product = Product.objects.all().order_by('-created_time')
+    product_list = []
+    for p in product:
+        product_list.append(p.name)
+
     if request.method == 'POST':
         data = request.POST
         try:
             image = request.FILES['image']
         except:
             image = 'media/product/default.png'
-        if data['category'] not in category_list:
+        if data['category'] not in category_list and data['category'] != '':
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
+        if data['name'] in product_list:
+            return render(request, 'repeat.html', {'title': '错误'})
         category_id = Category.objects.get(name=data['category']).id
         product = Product.objects.create(name=data['name'],
                                          price=data['price'],
@@ -168,6 +204,50 @@ def custom_search(request):
                                                              'title': '查找顾客'})
     return render(request, 'custom/custom_result.html', {'custom': custom,
                                                          'title': '查找顾客'})
+
+
+def custom_update(request, cid):
+    custom = Customer.objects.get(id=cid)
+    if custom.birthday is None:
+        birthday = ['', '', '']
+    else:
+        birthday = str(custom.birthday).split('-')
+    if request.method == "GET":
+        return render(request, "custom/custom_update.html", {'custom': custom,
+                                                             'year': birthday[0],
+                                                             'month': birthday[1],
+                                                             'day': birthday[2],
+                                                             'title': '修改顾客信息'})
+    else:
+        custom_all = Customer.objects.all().order_by('-created_time')
+        name_list = []
+        for c in custom_all:
+            name_list.append(c.username)
+        data = request.POST
+        if data['username'] in name_list and data['username'] != custom.username:
+            return render(request, 'repeat.html', {'title': '错误'})
+        else:
+            pre_img = str(custom.image)
+            img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+            custom.username = data['username']
+            custom.cellphone = data['cellphone']
+            try:
+                custom.image = request.FILES['image']
+                flag_img = 1
+            except:
+                flag_img = 0
+            year = data['year']
+            month = data['month']
+            day = data['day']
+            birthday = year + '-' + month + '-' + day
+            custom.birthday = birthday
+            custom.wechat = data['wechat']
+            custom.address = data['address']
+            custom.user_info = data['user_info']
+            custom.save(force_update=True)
+            if flag_img == 1 and os.path.exists(img_path) and not pre_img.endswith('default.png'):
+                os.remove(img_path)
+            return redirect('/custom_list/')
 
 
 def product_search(request):
@@ -200,6 +280,7 @@ def product_detail(request, pid):
 
 def product_update(request, pid):
     product = Product.objects.get(id=pid)
+    sold = Sold.objects.filter(name=product.name)
     status = Status.objects.all()
     category = Category.objects.all()
     if request.method == "GET":
@@ -209,29 +290,38 @@ def product_update(request, pid):
                                                                'title': '修改商品信息'})
     else:
         data = request.POST
+        name_list = []
+        for p in Product.objects.all():
+            name_list.append(p.name)
+        if data['name'] in name_list and data['name'] != product.name:
+            return render(request, 'repeat.html', {'title': '错误'})
         category_list = []
         for cate in category:
             category_list.append(cate.name)
-        if data['category'] not in category_list:
+        if data['category'] not in category_list and data['category'] != '':
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
-        pre_img = str(product.image)
-        img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
         product.name = data['name']
         product.price = data['price']
-        try:
+        if request.FILES.get('image', '') != '':
+            pre_img = str(product.image)
+            img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+            if os.path.exists(img_path) and not img_path.endswith('default.png'):
+                os.remove(img_path)
             product.image = request.FILES['image']
-            flag_img = 1
-        except:
-            flag_img = 0
+            for s in sold:
+                pre_img = str(s.image)
+                img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+                if os.path.exists(img_path) and not img_path.endswith('default.png'):
+                    os.remove(img_path)
+                s.image = request.FILES['image']
+                s.save()
         if data['category'] == '':
             product.category_id = Category.objects.get(name=product.category).id
         else:
             product.category_id = Category.objects.get(name=data['category']).id
         product.storage = data['storage']
         product.save(force_update=True)
-        if flag_img == 1 and os.path.exists(img_path):
-            os.remove(img_path)
         return redirect('/product_detail/{}'.format(pid))
 
 
@@ -270,35 +360,104 @@ def sold_product_update(request, pid):
     product = Sold.objects.get(id=pid)
     category = Category.objects.all().order_by('-created_time')
     custom = Customer.objects.all().order_by('-created_time')
+    # 获取之前销售数量
+    storage_before = product.storage
+    # 获取当前商品的库存数量
+    product1 = Product.objects.get(name=product.name)
+    product2 = Sold.objects.filter(name=product.name).filter(~Q(id=product.id))
+    allow_storage = int(storage_before) + int(product1.storage)
     if request.method == "GET":
         return render(request, "product/sold_product_update.html", {'product': product,
                                                                     'category': category,
                                                                     'custom': custom,
+                                                                    'allow_storage': allow_storage,
                                                                     'title': '销售商品修改'})
     else:
         data = request.POST
+        change_storage = int(data['storage']) - int(product.storage)
         category_list = []
         for cate in category:
             category_list.append(cate.name)
-        if data['category'] not in category_list:
+        if data['category'] not in category_list and data['category'] != '':
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
-        pre_img = str(product.image)
-        img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
         product.name = data['name']
         product.price = data['price']
-        try:
+        if request.FILES.get('image', '') != '':
+            pre_img = str(product1.image)
+            img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+            if os.path.exists(img_path) and not img_path.endswith('default.png'):
+                os.remove(img_path)
+            product1.image = request.FILES['image']
+            pre_img = str(product.image)
+            img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+            if os.path.exists(img_path) and not img_path.endswith('default.png'):
+                os.remove(img_path)
             product.image = request.FILES['image']
-            flag_img = 1
-        except:
-            flag_img = 0
+            for p in product2:
+                pre_img = str(p.image)
+                img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
+                if os.path.exists(img_path) and not img_path.endswith('default.png'):
+                    os.remove(img_path)
+                p.image = request.FILES['image']
+                p.save()
         product.category_name = data['category']
         product.storage = data['storage']
         product.save(force_update=True)
-        if flag_img == 1 and os.path.exists(img_path):
-            os.remove(img_path)
+        product1.storage -= change_storage
+        product1.save(force_update=True)
         return redirect('/product_sold_list/')
 
 
+def category_list(request):
+    category = Category.objects.all().order_by('-created_time')
+    data_list = []
+    for c in category:
+        count = Product.objects.filter(category_id=c.id).count()
+        data_list.append([c.name, count, c.id, c.created_time])
+    return render(request, 'category/product_category_list.html', {'data_list': data_list})
+
+
+def category_update(request, cid):
+    category = Category.objects.get(id=cid)
+
+    if request.method == "GET":
+        return render(request, 'category/category_update.html', {'category': category})
+    else:
+        category_all = Category.objects.all()
+        c_list = []
+        for c in category_all:
+            c_list.append(c.name)
+        data = request.POST
+        if data['name'] in c_list and data['name'] != category.name:
+            return render(request, 'repeat.html', {'title': '错误'})
+        else:
+            category.name = data['name']
+            category.save()
+            return redirect('/category_list/')
+
+
+def create_category(request):
+    category = Category.objects.all().order_by('-created_time')
+    category_list = []
+    for cate in category:
+        category_list.append(cate.name)
+
+    if request.method == 'POST':
+        data = request.POST
+        if data['name'] not in category_list:
+            new_category = Category.objects.create(name=data['name'])
+            new_category.save()
+            return redirect('/category_list/')
+        else:
+            return render(request, 'repeat.html', {'title': '错误'})
+    else:
+        return render(request, 'category/create_category.html', {'title': '新建分类'})
+
+
+def product_custom_list(request, cid):
+    product = Product.objects.filter(category_id=cid)
+    return render(request, 'product/product_category_list.html', {'product': product,
+                                                                  'title': '销售商品列表'})
 
 

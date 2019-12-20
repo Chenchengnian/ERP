@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block search %}
+<h1>分类更新</h1>
+{% endblock %}
+
+{% block body %}
+<form style="padding-left: 5%" class="form" action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="id_name">分类名称:</label>
+    <div class="form-group">
+        <label><input type="text" name="name" maxlength="200" required="" id="id_name"
+                      value="{{ category.name }}"></label>
+        <br>
+    </div>
+
+
+    <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认修改</button>
+</form>
+{% endblock %}

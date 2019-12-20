@@ -27,22 +27,10 @@
 
     <label for="id_image">商品图片:</label>
     <div class="form-group">
-        <label><input type="file" name="image" id="id_image"></label>
+        <label><input type="file" name="image" id="id_image" value="{{ product.image }}"></label>
         <br>
     </div>
 
-
-<!--    <label for="id_status">商品状态:</label>-->
-<!--    <div class="form-group">-->
-<!--        <label><select name="status" required="" id="id_status">-->
-<!--            <option value="{{ product.status }}" selected="">{{ product.status | safe }}</option>-->
-<!--            {% for s in status %}-->
-<!--            <option value="{{ s.id }}">{{ s.status }}</option>-->
-<!--            {% endfor %}-->
-
-<!--        </select></label>-->
-<!--        <br>-->
-<!--    </div>-->
 
 
     <label for="id_category">分类:</label>
@@ -61,7 +49,7 @@
 
     <label for="id_storage">库存数量:</label>
     <div class="form-group">
-        <label><input type="number" name="storage" required="" id="id_storage" value="{{ product.storage }}"></label>
+        <label><input type="number" name="storage" required="" id="id_storage" value="{{ product.storage }}" oninput="if(value<0)value=0"></label>
         <br>
     </div>
 
