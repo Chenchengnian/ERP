@@ -30,42 +30,48 @@
             <tr>
                 <th>序号</th>
                 <th>姓名</th>
+                <th>购买商品数量</th>
                 <th>照片</th>
                 <th>电话</th>
+                <th>微信</th>
                 <th>生日</th>
                 <th>地址</th>
+                <th>用户简介</th>
                 <th>操作</th>
             </tr>
             </thead>
-             {% for c in custom %}
+             {% for c in custom_list %}
             <script>
-                function show{{ c.id }}() {
-                  document.getElementById("dialog-img{{ c.id }}").style.display = 'block';
+                function show{{ c.0 }}() {
+                  document.getElementById("dialog-img{{ c.0 }}").style.display = 'block';
                 }
-                function hide{{ c.id }}() {
-                  document.getElementById("dialog-img{{ c.id }}").style.display = 'none';
+                function hide{{ c.0 }}() {
+                  document.getElementById("dialog-img{{ c.0 }}").style.display = 'none';
                 }
                 </script>
             {% endfor %}
             <tbody>
-            {% for c in custom %}
+            {% for c in custom_list %}
             <tr>
-                <th scope="row">{{ c.id }}</th>
-                <td>{{ c.username }}</td>
+                <th scope="row">{{ c.0 }}</th>
+                <td>{{ c.1 }}</td>
+                <td>{{ c.2 }}</td>
                 <td>
-                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ c.id }}()">查看图片</a>
+                    <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ c.0 }}()">查看图片</a>
                     </div>
                 </td>
-                <div class="dialog-mask" id="dialog-img{{ c.id }}" onclick="hide{{ c.id }}()">
+                <div class="dialog-mask" id="dialog-img{{ c.0 }}" onclick="hide{{ c.0 }}()">
                     <div class="dialog-conent">
-                        <img src="/media/{{ c.image }}/">
+                        <img src="/media/{{ c.3 }}/">
                     </div>
                 </div>
-                <td>{{ c.cellphone }}</td>
-                <td>{{ c.birthday|default_if_none:'' }}</td>
-                <td>{{ c.address }}</td>
+                <td>{{ c.4 }}</td>
+                <td>{{ c.5 }}</td>
+                <td>{{ c.6|default_if_none:'' }}</td>
+                <td>{{ c.7 }}</td>
+                <td>{{ c.8 }}</td>
                 <td>
-                    <a name="{{ c.id }}" href="{% url 'storage_system:custom_update' c.id %}">修改信息</a>
+                    <a name="{{ c.0 }}" href="{% url 'storage_system:custom_update' c.0 %}">修改信息</a>
                 </td>
             </tr>
             {% endfor %}

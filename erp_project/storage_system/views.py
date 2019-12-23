@@ -46,15 +46,23 @@ def get_today():
     return datetime.date.today()
 
 
+def take_second(elem):
+    return elem[1]
+
+
 def index(request):
+
     product = Product.objects.all().order_by('-created_time')[:5]
     category = Category.objects.all().order_by('-created_time')[:5]
     short_storage_product = Product.objects.filter(storage__lte=10).order_by('storage')[:5]
     custom = Customer.objects.all()
-    ids = ['虚位以待', '虚位以待', '虚位以待', '虚位以待', '虚位以待', '虚位以待']
+    ids = [['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0]]
     ind = 0
     for i in custom:
-        ids[ind] = i.username
+        number = Sold.objects.filter(purchaser_id=i.id).count()
+        ids[ind][0] = i.username
+        ids[ind][1] = number
+        ids[ind][2] = i.id
         ind += 1
     data_list = []
     for c in category:
@@ -88,7 +96,11 @@ def index(request):
 def custom_list(request):
     custom = Customer.objects.all().order_by('-created_time')
     count = Customer.objects.all().count()
-    return render(request, 'custom/custom_list.html', {'custom': custom,
+    custom_list = []
+    for c in custom:
+        number = Sold.objects.filter(purchaser_id=c.id).count()
+        custom_list.append([c.id, c.username, number, c.image, c.cellphone, c.wechat, c.birthday, c.address, c.user_info])
+    return render(request, 'custom/custom_list.html', {'custom_list': custom_list,
                                                        'count': count,
                                                        'title': '顾客列表'})
 
@@ -415,7 +427,7 @@ def category_list(request):
     for c in category:
         count = Product.objects.filter(category_id=c.id).count()
         data_list.append([c.name, count, c.id, c.created_time])
-    return render(request, 'category/product_category_list.html', {'data_list': data_list})
+    return render(request, 'category/category_list.html', {'data_list': data_list})
 
 
 def category_update(request, cid):
@@ -456,8 +468,8 @@ def create_category(request):
 
 
 def product_custom_list(request, cid):
-    product = Product.objects.filter(category_id=cid)
-    return render(request, 'product/product_category_list.html', {'product': product,
-                                                                  'title': '销售商品列表'})
+    sold = Sold.objects.filter(customer_id=cid)
+    return render(request, 'product/product_custom_list.html', {'sold': sold,
+                                                                'title': '购买商品列表'})
 
 

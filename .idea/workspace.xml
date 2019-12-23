@@ -2,31 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/erp_project/media/custom/门头照.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/timg_1.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/timg_1_m8rMdwu.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/timg_1_muG0dYr.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/门头照.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/media/product/门头照_AZJ2wgx.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/category/category_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/category/category_update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/category/create_category.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/custom/custom_update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/product_category_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/product_custom_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erp_project/templates/repeat.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/media/product/我的正.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/storage_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/custom/create_custom.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/custom/create_custom.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/custom/custom_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/custom/custom_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_update.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/sold_product_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/sold_product_update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,19 +37,19 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/erp_project/storage_system/media/product" />
-      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
-      <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
-      <recent name="$PROJECT_DIR$/erp_project" />
-      <recent name="$PROJECT_DIR$/erp_project/erp_project" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/erp_project/templates/product" />
       <recent name="$PROJECT_DIR$/erp_project/media/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
       <recent name="$PROJECT_DIR$/erp_project/templates" />
       <recent name="$PROJECT_DIR$/erp_project/templates/category" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/erp_project/storage_system/media/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
+      <recent name="$PROJECT_DIR$/erp_project" />
+      <recent name="$PROJECT_DIR$/erp_project/erp_project" />
     </key>
   </component>
   <component name="RunDashboard">

@@ -246,48 +246,78 @@
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-primary text-white shadow">
                         <div class="card-body">
-                            {{ c.0 }}
-                            <div class="text-white-50 small">购买了{{ n.0 }}件商品</div>
+                            <td>{% ifequal c.0.1 0 %}
+                                {{ c.0.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.0.2 }}" href="{% url 'storage_system:product_category_list' c.0.2 %}">{{ c.0.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.0.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-success text-white shadow">
                         <div class="card-body">
-                            {{ c.1 }}
-                            <div class="text-white-50 small">购买了{{ n.1 }}件商品</div>
+                            <td>{% ifequal c.1.1 0 %}
+                                {{ c.1.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.1.2 }}" href="{% url 'storage_system:product_category_list' c.1.2 %}">{{ c.1.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.1.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-info text-white shadow">
                         <div class="card-body">
-                            {{ c.2 }}
-                            <div class="text-white-50 small">购买了{{ n.2 }}件商品</div>
+                            <td>{% ifequal c.2.1 0 %}
+                                {{ c.2.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.2.2 }}" href="{% url 'storage_system:product_category_list' c.2.2 %}">{{ c.2.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.2.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-warning text-white shadow">
                         <div class="card-body">
-                            {{ c.3 }}
-                            <div class="text-white-50 small">购买了{{ n.3 }}件商品</div>
+                            <td>{% ifequal c.3.1 0 %}
+                                {{ c.3.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.3.2 }}" href="{% url 'storage_system:product_category_list' c.3.2 %}">{{ c.3.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.3.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-danger text-white shadow">
                         <div class="card-body">
-                            {{ c.4 }}
-                            <div class="text-white-50 small">购买了{{ n.4 }}件商品</div>
+                            <td>{% ifequal c.4.1 0 %}
+                                {{ c.4.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.4.2 }}" href="{% url 'storage_system:product_category_list' c.4.2 %}">{{ c.4.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.4.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-secondary text-white shadow">
                         <div class="card-body">
-                            {{ c.5 }}
-                            <div class="text-white-50 small">购买了{{ n.5 }}件商品</div>
+                            <td>{% ifequal c.5.1 0 %}
+                                {{ c.5.0 }}
+                                {% else %}
+                                <a style="color: white" name="{{ c.5.2 }}" href="{% url 'storage_system:product_category_list' c.5.2 %}">{{ c.5.0 }}
+                                </a>{% endifequal %}
+                            </td>
+                            <div class="text-white-50 small">购买了{{ c.5.1 }}件商品</div>
                         </div>
                     </div>
                 </div>
