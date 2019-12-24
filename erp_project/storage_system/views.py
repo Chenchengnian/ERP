@@ -4,6 +4,7 @@ import os
 import time
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from datetime import timedelta
 
 from .models import Customer, Product, Status, Category, Sold
 
@@ -46,28 +47,91 @@ def get_today():
     return datetime.date.today()
 
 
+def get_month_date_list():
+    date_list = []
+    if get_month() in [1, 3, 5, 7, 8, 10, 12]:
+        for i in range(1, 32):
+            if i < 10:
+                i = '0' + str(i)
+            date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+    elif get_month() in [4, 6, 9, 11]:
+        for i in range(1, 31):
+            if i < 10:
+                i = '0' + str(i)
+            date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+    else:
+        if (get_year() % 4) == 0 and (get_year() % 100) != 0 or (get_year() % 400) == 0:
+            for i in range(1, 30):
+                if i < 10:
+                    i = '0' + str(i)
+                date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+        else:
+            for i in range(1, 29):
+                if i < 10:
+                    i = '0' + str(i)
+                date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+    return date_list
+
+
+def get_date_list():
+    date_list = []
+    if get_month() in [1, 3, 5, 7, 8, 10, 12]:
+        for i in range(1, 32):
+            date_list.append(i)
+    elif get_month() in [4, 6, 9, 11]:
+        for i in range(1, 31):
+            date_list.append(i)
+    else:
+        if (get_year() % 4) == 0 and (get_year() % 100) != 0 or (get_year() % 400) == 0:
+            for i in range(1, 30):
+                date_list.append(i)
+        else:
+            for i in range(1, 29):
+                date_list.append(i)
+    return date_list
+
+
+def get_weekday_date_list():
+    date_list = []
+    today = datetime.date.today()
+    this_week_start = today - timedelta(days=today.weekday())
+    this_week_end = today + timedelta(days=6 - today.weekday())
+    for i in range(int(str(this_week_start).split('-')[-1]), int(str(this_week_end).split('-')[-1]) + 1):
+        if i < 10:
+            i = '0' + str(i)
+        date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+    return date_list
+
+
 def take_second(elem):
     return elem[1]
 
 
 def index(request):
-
-    product = Product.objects.all().order_by('-created_time')[:5]
-    category = Category.objects.all().order_by('-created_time')[:5]
-    short_storage_product = Product.objects.filter(storage__lte=10).order_by('storage')[:5]
+    product = Product.objects.all().order_by('-created_time')
+    category = Category.objects.all()
+    short_storage_product = Product.objects.all().order_by('storage')[:6]
     custom = Customer.objects.all()
-    ids = [['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0], ['虚位以待', 0, 0]]
-    ind = 0
+    name_list = []
     for i in custom:
         number = Sold.objects.filter(purchaser_id=i.id).count()
-        ids[ind][0] = i.username
-        ids[ind][1] = number
-        ids[ind][2] = i.id
-        ind += 1
+        name_list.append([i.username, number, i.id])
+    name_list.sort(key=take_second, reverse=True)
+    if len(name_list) < 6:
+        for i in range(6-len(name_list)):
+            name_list.append(['虚位以待', 0, 0])
+    else:
+        name_list = name_list[0:6]
     data_list = []
-    for c in category:
-        count = Product.objects.filter(category_id=c.id).count()
-        data_list.append([c.name, count, c.id])
+    for i in category:
+        number = Product.objects.filter(category_id=i.id).count()
+        data_list.append([i.name, number, i.id])
+    data_list.sort(key=take_second, reverse=True)
+    if len(name_list) > 5:
+        data_list = data_list[:5]
+    short_storage_product_list = []
+    for i in short_storage_product:
+        short_storage_product_list.append([i.name, i.storage, i.storage * 10, i.id])
     sold_number = Sold.objects.filter(sale_date__contains=get_today()).count()
     today_sold = Sold.objects.filter(sale_date__contains=get_today())
     month_sold = Sold.objects.filter(sale_date__gte=get_month_first_day_and_last_day(get_year(), get_month())[0],
@@ -85,10 +149,10 @@ def index(request):
                                           'customer': get_customer(),
                                           'today': get_today(),
                                           'month': get_month(),
-                                          'product': product,
+                                          'product': product[:5],
                                           'category': data_list,
-                                          'short_storage_product': short_storage_product,
-                                          'c': ids,
+                                          'short_storage_product': short_storage_product_list,
+                                          'c': name_list,
                                           'title': '留琛金玉之盟'
                                           })
 
@@ -139,7 +203,9 @@ def month_sold_list(request):
 
 def product_category_list(request, cid):
     product = Product.objects.filter(category_id=cid)
+    name = Category.objects.get(id=cid).name
     return render(request, 'product/product_category_list.html', {'product': product,
+                                                                  'name': name,
                                                                   'title': '销售商品列表'})
 
 
@@ -394,7 +460,7 @@ def sold_product_update(request, pid):
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
         product.name = data['name']
-        product.price = data['price']
+        product.sold_price = data['price']
         if request.FILES.get('image', '') != '':
             pre_img = str(product1.image)
             img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pre_img)
@@ -468,8 +534,67 @@ def create_category(request):
 
 
 def product_custom_list(request, cid):
-    sold = Sold.objects.filter(customer_id=cid)
-    return render(request, 'product/product_custom_list.html', {'sold': sold,
+    product = Sold.objects.filter(purchaser_id=cid).order_by('-sale_date')
+    name = Customer.objects.get(id=cid).username
+    return render(request, 'product/product_custom_list.html', {'product': product,
+                                                                'name': name,
                                                                 'title': '购买商品列表'})
+
+
+def total_data(request):
+    y_axis_pre_day_by_month = []
+    for date in get_month_date_list():
+        earn_by_month = 0
+        sold = Sold.objects.filter(sale_date__contains=date)
+        if len(sold) == 0:
+            y_axis_pre_day_by_month.append(0)
+        else:
+            for s in sold:
+                earn_by_month += int(s.sold_price) * int(s.storage)
+            y_axis_pre_day_by_month.append(earn_by_month)
+
+    y_axis_pre_day_by_week = []
+    earn_by_week = 0
+    for date in get_weekday_date_list():
+        sold = Sold.objects.filter(sale_date__contains=date)
+        if len(sold) == 0:
+            y_axis_pre_day_by_week.append(0)
+        else:
+            for s in sold:
+                earn_by_week += int(s.sold_price) * int(s.storage)
+            y_axis_pre_day_by_week.append(earn_by_week)
+
+    today_sold = Sold.objects.filter(sale_date__contains=get_today())
+    name_list = []
+    for s in today_sold:
+        name = str(s.name)
+        if name not in name_list:
+            name_list.append(name)
+    value_list = []
+    for i in name_list:
+        try:
+            today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).get(name=i)
+            value_list.append([int(today_sold_by_name.storage), i])
+        except:
+            today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).filter(name=i)
+            storage = 0
+            for j in today_sold_by_name:
+                storage += int(j.storage)
+            value_list.append([storage, i])
+
+    return render(request, 'data/total_data.html', {'month': get_month(),
+                                                    'x_axis_pre_day_by_month': get_month_date_list(),
+                                                    'y_axis_pre_day_by_month': y_axis_pre_day_by_month,
+                                                    'y_axis_pre_day_by_week': y_axis_pre_day_by_week,
+                                                    'category_list': name_list,
+                                                    'value_list': value_list})
+
+
+def sale_data_pre_day(request):
+    if request.method == 'POST':
+        return
+    else:
+        return render(request, 'data/sale_data_pre_day.html', {'x_axis': [1, 2, 3, 4, 5],
+                                                               'y_axis': [100, 111, 222, 48, 0]})
 
 

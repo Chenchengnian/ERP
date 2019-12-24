@@ -55,7 +55,11 @@
             <tr>
                 <th scope="row">{{ c.0 }}</th>
                 <td>{{ c.1 }}</td>
+                {% ifequal c.2 0 %}
                 <td>{{ c.2 }}</td>
+                {% else %}
+                <td><a style="text-decoration:none;" name="{{ c.0 }}" href="{% url 'storage_system:product_custom_list' c.0 %}">{{ c.2 }}</a></td>
+                {% endifequal %}
                 <td>
                     <div data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#" onclick="show{{ c.0 }}()">查看图片</a>
                     </div>
