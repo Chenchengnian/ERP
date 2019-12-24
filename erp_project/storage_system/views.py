@@ -554,12 +554,13 @@ def total_data(request):
             y_axis_pre_day_by_month.append(earn_by_month)
 
     y_axis_pre_day_by_week = []
-    earn_by_week = 0
+
     for date in get_weekday_date_list():
         sold = Sold.objects.filter(sale_date__contains=date)
         if len(sold) == 0:
             y_axis_pre_day_by_week.append(0)
         else:
+            earn_by_week = 0
             for s in sold:
                 earn_by_week += int(s.sold_price) * int(s.storage)
             y_axis_pre_day_by_week.append(earn_by_week)
