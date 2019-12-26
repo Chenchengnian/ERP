@@ -23,6 +23,7 @@
                 <th>商品图片</th>
                 <th>商品分类</th>
                 <th>购买数量</th>
+                <th>付款方式</th>
                 <th>购买时间</th>
                 <th>操作</th>
             </tr>
@@ -55,6 +56,7 @@
 
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
+                <td>{{ p.payment_method }}</td>
                 <td>{{ p.created_time }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}" >修改信息</a>

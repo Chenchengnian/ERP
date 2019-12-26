@@ -52,7 +52,7 @@
 
     <label for="id_address">顾客地址:</label>
     <div class="form-group">
-    <label><input type="text" name="address" maxlength="200" id="id_address" value="{{ custom.address }}"></label>
+    <label><input type="text" name="address" maxlength="40" id="id_address" value="{{ custom.address }}"></label>
         <br>
   </div>
 
@@ -60,7 +60,7 @@
 
     <label for="id_user_info">顾客信息:</label>
     <div class="form-group">
-    <label><textarea name="user_info" cols="40" rows="10" id="id_user_info" value="{{ custom.user_info }}"></textarea></label>
+    <label><textarea name="user_info" cols="40" rows="10" id="id_user_info" maxlength="16">{{ custom.user_info | default_if_none:'' }}</textarea></label>
         <br>
   </div>
 

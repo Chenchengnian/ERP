@@ -5,16 +5,19 @@
 {% block search %}
 
 <!-- Topbar Search -->
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="/sold_product_search/">
-      {% csrf_token %}
-    <div class="input-group">
-        <div class="input-group-append">
-            <input type="text" style="height: 30px" class="form-control bg-light border-0 small" placeholder="搜索" aria-label="Search" aria-describedby="basic-addon2" name="keyword" required="required">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm" ></i>
-            </button>
-        </div>
-    </div>
+<form style="padding-left: 0%" class="form" action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <label><input style="height: 15px; width:120px" type="text" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='4' name="year" required="" id="year"
+                      value="{{ year }}" autocomplete="off" ></label>
+       <span>年</span>
+        <label><input oninput="if(value<=0)value='';if(value>12)value=12" style="height: 15px; width:120px" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='2' name="month" id="month"
+                      value="{{ month }}" autocomplete="off"></label>
+       <span>月</span>
+        <label><input oninput="if(value<=0)value='';if(value>31)value=31" style="height: 15px; width:120px" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='2' name="day" id="day"
+                      value="{{ day }}" autocomplete="off"></label>
+
+       <span>日</span>
+       <label><button style="width:80px" type="submit" class="btn btn-primary btn-block">查询</button></label>
 </form>
 {% endblock %}
 
@@ -34,7 +37,8 @@
                 <th>销售数量</th>
                 <th>商品图片</th>
                 <th>商品状态</th>
-                <th>购买/预定人</th>
+                <th>购买者</th>
+                <th>付款方式</th>
                 <th>商品分类</th>
                 <th>出售时间</th>
                 <th>操作</th>
@@ -68,6 +72,7 @@
                 </div>
                 <td>已出售</td>
                 <td>{{ p.purchaser }}</td>
+                <td>{{ p.payment_method }}</td>
                 <td>{{ p.category }}</td>
                 <td>{{ p.sale_date }}</td>
                 <td>
@@ -81,5 +86,22 @@
     {% ifequal count 0 %}
     <h1 style="text-align: center; line-height: 400px">当前暂无已售商品</h1>
     {% endifequal %}
+    {% if date == '' %}
+    <div id="pages" class="text-center" style="float: right">
+        <nav>
+            <ul class="pagination">
+                <li class="step-links">
+                {% if sold.has_previous %}
+                    <a class='active' href="/product_sold_list/?page={{ sold.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span class="current">
+                    第{{ sold.number }}/{{ sold.paginator.num_pages }}页</span>
+
+                {% if sold.has_next %}
+                    <a class='active' href="/product_sold_list/?page={{ sold.next_page_number }}">下一页</a>
+                {% endif %}
+                </li></ul></nav></div>
 </div>
+{% endif %}
 {% endblock %}

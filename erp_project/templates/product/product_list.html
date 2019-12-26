@@ -89,5 +89,21 @@
     {% ifequal count 0 %}
     <h1 style="text-align: center; line-height: 400px">当前没有商品,快去<a href="/create_product">添加</a>吧</h1>
     {% endifequal %}
+    <div id="pages" class="text-center" style="float: right">
+        <nav>
+            <ul class="pagination">
+                <li class="step-links">
+                {% if product.has_previous %}
+                    <a class='active' href="/product_list/?page={{ product.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span class="current">
+                    第{{ product.number }}/{{ product.paginator.num_pages }}页</span>
+
+                {% if product.has_next %}
+                    <a class='active' href="/product_list/?page={{ product.next_page_number }}">下一页</a>
+                {% endif %}
+                </li></ul></nav></div>
 </div>
+
 {% endblock %}

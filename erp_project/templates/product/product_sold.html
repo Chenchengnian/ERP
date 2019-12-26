@@ -66,7 +66,7 @@
     </div>
 
 
-    <label for="id_custom">购买/预定人:</label>
+    <label for="id_custom">购买者:</label>
     <div class="form-group">
         <label><input type="text" name="custom" required="" id="id_custom" list="custom_list" autocomplete="off"
                       maxlength="20"></label>
@@ -76,6 +76,12 @@
             {% endfor %}
         </datalist>
 
+        <br>
+    </div>
+
+    <label for="payment_method">付款方式:</label>
+    <div class="form-group">
+        <label><input type="text" name="payment_method" step="any" required="" id="payment_method"></label>
         <br>
     </div>
 

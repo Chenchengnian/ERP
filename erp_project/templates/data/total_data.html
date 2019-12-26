@@ -136,7 +136,11 @@ option = {
     },
     title: {
                 left: 'center',
+                {% if null %}
+                text: '今日未售出商品',
+                {% else %}
                 text: '本日销售详情',
+                {% endif %}
             },
     legend: {
         orient: 'vertical',
@@ -180,6 +184,5 @@ if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }
        </script>
-
    </body>
 {% endblock %}

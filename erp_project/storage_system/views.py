@@ -2,6 +2,8 @@ import calendar
 import datetime
 import os
 import time
+
+from django.core.paginator import Paginator, PageNotAnInteger, InvalidPage, EmptyPage
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from datetime import timedelta
@@ -41,6 +43,10 @@ def get_year():
 
 def get_month():
     return datetime.date.today().month
+
+
+def get_day():
+    return datetime.date.today().day
 
 
 def get_today():
@@ -138,10 +144,10 @@ def index(request):
                                      sale_date__lte=get_month_first_day_and_last_day(get_year(), get_month())[1])
     today_earn = month_earn = 0
     for sold in today_sold:
-        today_earn += int(sold.sold_price) * int(sold.storage)
+        today_earn += float(sold.sold_price) * int(sold.storage)
 
     for sold in month_sold:
-        month_earn += int(sold.sold_price) * int(sold.storage)
+        month_earn += float(sold.sold_price) * int(sold.storage)
 
     return render(request, 'index.html', {'month_earn': month_earn,
                                           'today_earn': today_earn,
@@ -172,17 +178,72 @@ def custom_list(request):
 def product_list(request):
     product = Product.objects.all().order_by('-created_time')
     count = Product.objects.all().count()
+    paginator = Paginator(product, 10)
+    page = request.GET.get('page')
+    if page:
+        try:
+            product = paginator.page(page)
+        except PageNotAnInteger:
+            product = paginator.page(1)
+        except EmptyPage:
+            product = paginator.page(1)
+    else:
+        product = paginator.page(1)
     return render(request, 'product/product_list.html', {'product': product,
                                                          'count': count,
                                                          'title': '商品列表'})
 
 
 def product_sold_list(request):
-    sold = Sold.objects.all().order_by('-created_time')
-    count = sold.count()
-    return render(request, 'product/product_sold_list.html', {'sold': sold,
-                                                              'count': count,
-                                                              'title': '销售商品列表'})
+    if request.method == 'GET':
+        sold = Sold.objects.all().order_by('-created_time')
+        count = sold.count()
+        paginator = Paginator(sold, 10)
+        page = request.GET.get('page')
+        if page:
+            try:
+                sold = paginator.page(page)
+            except PageNotAnInteger:
+                sold = paginator.page(1)
+            except EmptyPage:
+                sold = paginator.page(1)
+        else:
+            sold = paginator.page(1)
+        return render(request, 'product/product_sold_list.html', {'year': get_year(),
+                                                                  'month': get_month(),
+                                                                  'day': get_day(),
+                                                                  'sold': sold,
+                                                                  'count': count,
+                                                                  'date': '',
+                                                                  'title': '商品销售列表'})
+    else:
+        data = request.POST
+        year = data['year']
+        month = data['month']
+        day = data['day']
+        if month == '' and day == '':
+            date = year
+        elif day == '':
+            if int(month) < 10 and len(str(month)) == 1:
+                month = '0' + str(month)
+            date = year + '-' + month
+        elif month == '' and day != '':
+            date = '0000-00-00'
+        else:
+            if int(day) < 10 and len(str(day)) == 1:
+                day = '0' + str(day)
+            if int(month) < 10 and len(str(month)) == 1:
+                month = '0' + str(month)
+            date = year + '-' + month + '-' + day
+        sold = Sold.objects.filter(sale_date__contains=date).order_by('-created_time')
+        count = sold.count()
+        return render(request, 'product/product_sold_list.html', {'year': year,
+                                                                  'month': month,
+                                                                  'day': day,
+                                                                  'sold': sold,
+                                                                  'count': count,
+                                                                  'date': date,
+                                                                  'title': '商品销售列表'})
 
 
 def today_sold_list(request):
@@ -339,15 +400,17 @@ def product_search(request):
                                                            'title': '查找商品'})
 
 
-def sold_product_search(request):
-    q = request.POST.get('keyword', '')
-    product = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q)).order_by('-created_time')
-    count = product.count()
-    if count == 0:
-        return render(request, 'product/sold_product_result.html', {'count': count,
-                                                                    'title': '查找销售商品'})
-    return render(request, 'product/sold_product_result.html', {'product': product,
-                                                                'title': '查找销售商品'})
+# def sold_product_search(request):
+#     q = request.POST.get('keyword', '')
+#     product = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q)).order_by('-created_time')
+#     count = product.count()
+#     if count == 0:
+#         return render(request, 'product/sold_product_result.html', {'count': count,
+#                                                                     'title': '查找销售商品'})
+#     else:
+#         print(product)
+#         return render(request, 'product/sold_product_result.html', {'product': product,
+#                                                                     'title': '查找销售商品'})
 
 
 def product_detail(request, pid):
@@ -426,6 +489,7 @@ def product_sold(request, pid):
                                    storage=data['storage'],
                                    image=product.image,
                                    purchaser_id=purchase_id,
+                                   payment_method=data['payment_method'],
                                    sale_date=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         sold.save(force_update=True)
         storage = int(product.storage) - int(data['storage'])
@@ -437,13 +501,16 @@ def product_sold(request, pid):
 def sold_product_update(request, pid):
     product = Sold.objects.get(id=pid)
     category = Category.objects.all().order_by('-created_time')
-    custom = Customer.objects.all().order_by('-created_time')
     # 获取之前销售数量
     storage_before = product.storage
     # 获取当前商品的库存数量
     product1 = Product.objects.get(name=product.name)
     product2 = Sold.objects.filter(name=product.name).filter(~Q(id=product.id))
     allow_storage = int(storage_before) + int(product1.storage)
+    custom = Customer.objects.all().order_by('-created_time')
+    name_list = []
+    for name in custom:
+        name_list.append(name.username)
     if request.method == "GET":
         return render(request, "product/sold_product_update.html", {'product': product,
                                                                     'category': category,
@@ -453,13 +520,11 @@ def sold_product_update(request, pid):
     else:
         data = request.POST
         change_storage = int(data['storage']) - int(product.storage)
-        category_list = []
-        for cate in category:
-            category_list.append(cate.name)
-        if data['category'] not in category_list and data['category'] != '':
-            new_category = Category.objects.create(name=data['category'])
-            new_category.save()
-        product.name = data['name']
+        if data['custom'] not in name_list and data['custom'] != '':
+            new_custom = Customer.objects.create(username=data['custom'])
+            new_custom.save()
+        purchaser_id = Customer.objects.get(username=data['custom']).id
+        product.purchaser_id = purchaser_id
         product.sold_price = data['price']
         if request.FILES.get('image', '') != '':
             pre_img = str(product1.image)
@@ -479,9 +544,9 @@ def sold_product_update(request, pid):
                     os.remove(img_path)
                 p.image = request.FILES['image']
                 p.save()
-        product.category_name = data['category']
         product.storage = data['storage']
-        product.save(force_update=True)
+        product.payment_method = data['payment_method']
+        product.save()
         product1.storage -= change_storage
         product1.save(force_update=True)
         return redirect('/product_sold_list/')
@@ -542,6 +607,7 @@ def product_custom_list(request, cid):
 
 
 def total_data(request):
+    null = False
     y_axis_pre_day_by_month = []
     for date in get_month_date_list():
         earn_by_month = 0
@@ -550,7 +616,7 @@ def total_data(request):
             y_axis_pre_day_by_month.append(0)
         else:
             for s in sold:
-                earn_by_month += int(s.sold_price) * int(s.storage)
+                earn_by_month += float(s.sold_price) * int(s.storage)
             y_axis_pre_day_by_month.append(earn_by_month)
 
     y_axis_pre_day_by_week = []
@@ -562,7 +628,7 @@ def total_data(request):
         else:
             earn_by_week = 0
             for s in sold:
-                earn_by_week += int(s.sold_price) * int(s.storage)
+                earn_by_week += float(s.sold_price) * int(s.storage)
             y_axis_pre_day_by_week.append(earn_by_week)
 
     today_sold = Sold.objects.filter(sale_date__contains=get_today())
@@ -582,20 +648,110 @@ def total_data(request):
             for j in today_sold_by_name:
                 storage += int(j.storage)
             value_list.append([storage, i])
-
+    if len(name_list) == 0:
+        null = True
     return render(request, 'data/total_data.html', {'month': get_month(),
                                                     'x_axis_pre_day_by_month': get_month_date_list(),
                                                     'y_axis_pre_day_by_month': y_axis_pre_day_by_month,
                                                     'y_axis_pre_day_by_week': y_axis_pre_day_by_week,
                                                     'category_list': name_list,
-                                                    'value_list': value_list})
+                                                    'value_list': value_list,
+                                                    'null': null})
 
 
-def sale_data_pre_day(request):
+def sale_data_by_day(request):
+    null = False
+    if request.method == 'POST':
+        data = request.POST
+        year = data['year']
+        month = data['month']
+        day = data['day']
+        if month == '' and day == '':
+            date = year
+        elif day == '':
+            if int(month) < 10 and len(str(month)) == 1:
+                month = '0' + str(month)
+            date = year + '-' + month
+        elif month == '' and day != '':
+            date = '0000-00-00'
+        else:
+            if int(day) < 10 and len(str(day)) == 1:
+                day = '0' + str(day)
+            if int(month) < 10 and len(str(month)) == 1:
+                month = '0' + str(month)
+            date = year + '-' + month + '-' + day
+        today_sold = Sold.objects.filter(sale_date__contains=date)
+        name_list = []
+        for s in today_sold:
+            name = str(s.name)
+            if name not in name_list:
+                name_list.append(name)
+        value_list = []
+        for i in name_list:
+            try:
+                today_sold_by_name = Sold.objects.filter(sale_date__contains=date).get(name=i)
+                value_list.append([int(today_sold_by_name.storage), i])
+            except:
+                today_sold_by_name = Sold.objects.filter(sale_date__contains=date).filter(name=i)
+                storage = 0
+                for j in today_sold_by_name:
+                    storage += int(j.storage)
+                value_list.append([storage, i])
+
+        if len(name_list) == 0:
+            null = True
+        return render(request, 'data/sale_data_by_day.html', {'year': year,
+                                                              'month': month,
+                                                              'day': day,
+                                                              'date': date,
+                                                              'category_list': name_list,
+                                                              'value_list': value_list,
+                                                              'null': null})
+    else:
+        today_sold = Sold.objects.filter(sale_date__contains=get_today())
+        name_list = []
+        for s in today_sold:
+            name = str(s.name)
+            if name not in name_list:
+                name_list.append(name)
+        value_list = []
+        for i in name_list:
+            try:
+                today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).get(name=i)
+                value_list.append([int(today_sold_by_name.storage), i])
+            except:
+                today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).filter(name=i)
+                storage = 0
+                for j in today_sold_by_name:
+                    storage += int(j.storage)
+                value_list.append([storage, i])
+        if len(name_list) == 0:
+            null = True
+        return render(request, 'data/sale_data_by_day.html', {'year': get_year(),
+                                                              'month': get_month(),
+                                                              'day': get_day(),
+                                                              'date': get_today(),
+                                                              'category_list': name_list,
+                                                              'value_list': value_list,
+                                                              'null': null})
+
+
+def sale_data_by_month(request):
     if request.method == 'POST':
         return
     else:
-        return render(request, 'data/sale_data_pre_day.html', {'x_axis': [1, 2, 3, 4, 5],
-                                                               'y_axis': [100, 111, 222, 48, 0]})
+        return render(request, 'data/sale_data_by_month.html', {'x_axis': [1, 2, 3, 4, 5],
+                                                                'y_axis': [100, 111, 222, 48, 0]})
+
+
+def sale_data_by_year(request):
+    sold = Sold.objects.all()
+
+    paginator = Paginator(sold, 2)  # 按每页10条分页
+    page = request.GET.get('page', '1')  # 默认跳转到第一页
+    result = paginator.page(page)
+    return render(request, 'data/sale_data_by_year.html', {'messages': result})
+
+
 
 

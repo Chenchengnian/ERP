@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block search %}
+
+<!-- Topbar Search -->
+<form style="padding-left: 0%" class="form" action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <label><input style="height: 15px; width:120px" type="text" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='4' name="year" required="" id="year"
+                      value="{{ year }}" autocomplete="off" ></label>
+       <span>年</span>
+        <label><input oninput="if(value<=0)value='';if(value>12)value=12" style="height: 15px; width:120px" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='2' name="month" id="month"
+                      value="{{ month }}" autocomplete="off"></label>
+       <span>月</span>
+        <label><input oninput="if(value<=0)value='';if(value>31)value=31" style="height: 15px; width:120px" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" maxlength='2' name="day" id="day"
+                      value="{{ day }}" autocomplete="off"></label>
+
+       <span>日</span>
+       <label><button style="width:80px" type="submit" class="btn btn-primary btn-block">查询</button></label>
+</form>
+{% endblock %}
+{% block body %}
+<body style="height: 100%; margin: 0">
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">数据概览</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                <a style='text-decoration:none; color: green' href="/today_sold_list/">今日销售总额</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_earn }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                <a style='text-decoration:none; color: #0099CC' href="/today_sold_list/">今日销售笔数</a>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ sold_number }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    {% if null %}
+    <h1></h1>
+    <div style="padding-left: 35%; padding-top: 10%; font-size: 30px" id="show">{{date}}未卖出商品</div>
+    {% else %}
+    <div id="container1" style="height: 80%; width: 80%"></div>
+    {% endif %}
+           <script type="text/javascript">
+var dom = document.getElementById("container1");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '环形图';
+
+option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    title: {
+                left: 'center',
+                text: '{{ date }}销售详情',
+            },
+    legend: {
+        orient: 'vertical',
+        x: 'right',
+        data:{{ category_list | safe }}
+    },
+    series: [
+        {
+            name:'销售数量',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+            {% for data in value_list %}
+                {value:{{ data.0 }}, name:'{{ data.1 }}'},
+            {% endfor %}
+            ]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+{% endblock %}

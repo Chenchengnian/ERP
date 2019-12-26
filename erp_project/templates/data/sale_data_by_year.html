@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+
+ <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr class="danger">
+          <th>留言时间</th>
+          <th>留言者</th>
+          <th>标题</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if messages %}
+          {% for message in messages %}
+            <tr class="{% cycle 'active' 'success' 'warning' 'info' %}">
+              <td>{{ message.publish|date:'Y-m-d H:i:s' }}</td>
+              <td>{{ message.username }}</td>
+              <td>{{ message.title }}</td>
+              <td>{{ message.content }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="4">无数据</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <!-- 分页开始 -->
+    <div>
+      <ul class="pagination">
+      <li><a href="/guestbook/index/?page=1" rel="external nofollow" >首页</a></li>
+         {% if messages.has_previous %}
+            <li><a href="/guestbook/index/?page={{ messages.previous_page_number }}" rel="external nofollow" >上一页</a></li>
+        {% endif %}
+         {% for num in messages.paginator.page_range %}
+          <li><a href="/guestbook/index/?page={{ num }}" rel="external nofollow" >{{ num }}</a></li>
+         {% endfor %}
+        {% if messages.has_next %}
+           <li><a href="/guestbook/index/?page={{ messages.next_page_number }}" rel="external nofollow" >下一页</a></li>
+        {% endif %}
+        <li><a href="/guestbook/index/?page={{ messages.paginator.num_pages }}" rel="external nofollow" >尾页</a></li>
+       </ul>
+    </div>
+    <!-- 分页结束 -->
+    <div>
+       <a class="btn btn-xs btn-primary" href="/guestbook/create/" rel="external nofollow" >去留言</a>
+    </div>
+{% endblock %}

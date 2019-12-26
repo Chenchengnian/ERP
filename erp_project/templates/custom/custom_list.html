@@ -28,9 +28,8 @@
         <table class="table">
             <thead>
             <tr>
-                <th>序号</th>
                 <th>姓名</th>
-                <th>购买商品数量</th>
+                <th>购买数量</th>
                 <th>照片</th>
                 <th>电话</th>
                 <th>微信</th>
@@ -53,7 +52,6 @@
             <tbody>
             {% for c in custom_list %}
             <tr>
-                <th scope="row">{{ c.0 }}</th>
                 <td>{{ c.1 }}</td>
                 {% ifequal c.2 0 %}
                 <td>{{ c.2 }}</td>
@@ -73,7 +71,7 @@
                 <td>{{ c.5 }}</td>
                 <td>{{ c.6|default_if_none:'' }}</td>
                 <td>{{ c.7 }}</td>
-                <td>{{ c.8 }}</td>
+                <td>{{ c.8|default_if_none:'' }}</td>
                 <td>
                     <a name="{{ c.0 }}" href="{% url 'storage_system:custom_update' c.0 %}">修改信息</a>
                 </td>
