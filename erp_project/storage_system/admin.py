@@ -16,10 +16,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'price', 'image', 'status', 'info',
+    list_display = ['id', 'name', 'price', 'image', 'info',
                     'storage', 'created_time', 'modified_time']
 
-    list_filter = ('id', 'name', 'price', 'image', 'status', 'info',
+    list_filter = ('id', 'name', 'price', 'image', 'info',
                    'created_time', 'modified_time')  # 过滤器
 
 

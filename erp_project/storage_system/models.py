@@ -54,7 +54,7 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    image = models.ImageField(upload_to='media/custom', default='media/custom/default.png', verbose_name='顾客照片')
+    image = models.ImageField(upload_to='custom', default='custom/default.png', verbose_name='顾客照片')
     username = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='顾客姓名')
     cellphone = models.CharField(max_length=200, verbose_name='顾客电话')
     wechat = models.CharField(max_length=200, verbose_name='顾客微信')
@@ -78,8 +78,8 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
-    image = models.ImageField(upload_to='media/product', default='media/product/default.png', verbose_name='商品图片')
-    status = models.ForeignKey(Status, verbose_name='商品状态', related_name='product_status')
+    image = models.ImageField(upload_to='product', default='product/default.png', verbose_name='商品图片')
+    # status = models.ForeignKey(Status, verbose_name='商品状态', related_name='product_status')
     category = models.ForeignKey(Category, verbose_name='分类', blank=True, null=True, related_name='product_category')
     storage = models.IntegerField(verbose_name='库存数量')
     info = models.TextField(blank=True, null=True, verbose_name='产品信息')
