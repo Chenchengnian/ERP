@@ -282,7 +282,7 @@ def create_custom(request):
         try:
             image = request.FILES['image']
         except:
-            image = 'media/custom/default.png'
+            image = 'custom/default.png'
         birthday = data['year'] + '-' + data['month'] + '-' + data['day']
         custom = Customer.objects.create(username=data['username'],
                                          cellphone=data['cellphone'],
@@ -313,7 +313,7 @@ def create_product(request):
         try:
             image = request.FILES['image']
         except:
-            image = 'media/product/default.png'
+            image = 'product/default.png'
         if data['category'] not in category_list and data['category'] != '':
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
@@ -324,7 +324,7 @@ def create_product(request):
                                          price=data['price'],
                                          image=image,
                                          storage=data['storage'],
-                                         status_id=data['status'],
+                                         #  status_id=data['status'],
                                          category_id=category_id,
                                          info=data['info'])
         product.save(force_update=True)

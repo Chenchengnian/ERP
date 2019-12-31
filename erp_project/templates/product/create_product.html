@@ -12,7 +12,7 @@
   {% csrf_token %}
     <label for="id_name">商品名称:</label>
     <div class="form-group">
-    <label><input type="text" name="name" maxlength="200" required="" id="id_name"></label>
+    <label><input type="text" name="name" maxlength="200" required="" id="id_name" autocomplete="off"></label>
         <br>
   </div>
 
@@ -70,7 +70,7 @@
     <label for="id_storage">库存数量:</label>
     <div class="form-group">
     <label> <input type="number" name="storage" step="any" required=""
-                      oninput="if(value<1)value=1" id="id_storage" autocomplete="off" ></label>
+                      oninput="if(value<=0)value=''" id="id_storage" autocomplete="off" ></label>
         <br>
   </div>
 
