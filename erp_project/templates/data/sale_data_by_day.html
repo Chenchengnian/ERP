@@ -38,9 +38,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <a style='text-decoration:none; color: green' href="/today_sold_list/">今日销售总额</a>
+                                <a style='text-decoration:none; color: green' href="/today_sold_list/">{{date}}销售总额</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_earn }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{% if null %}0{% else %}{{ today_earn }}{% endif %}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -57,11 +57,15 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                <a style='text-decoration:none; color: #0099CC' href="/today_sold_list/">今日销售笔数</a>
+                                {% if get %}
+                                <a style='text-decoration:none; color: #0099CC'  href="/today_sold_list/">{{date}}销售笔数</a>
+                                {% else %}
+                                <a style='text-decoration:none; color: #0099CC' >{{date}}销售笔数</a>
+                                {% endif %}
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ sold_number }}
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{% if null %}0{% else %}{{ sold_number }}{% endif %}
                                     </div>
                                 </div>
                             </div>

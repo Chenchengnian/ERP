@@ -700,13 +700,21 @@ def sale_data_by_day(request):
 
         if len(name_list) == 0:
             null = True
+
+        sold_number = Sold.objects.filter(sale_date__contains=get_today()).count()
+        today_sold = Sold.objects.filter(sale_date__contains=get_today())
+        today_earn = 0
+        for sold in today_sold:
+            today_earn += float(sold.sold_price) * int(sold.storage)
         return render(request, 'data/sale_data_by_day.html', {'year': year,
                                                               'month': month,
                                                               'day': day,
                                                               'date': date,
                                                               'category_list': name_list,
                                                               'value_list': value_list,
-                                                              'null': null})
+                                                              'null': null,
+                                                              'today_earn': today_earn,
+                                                              'sold_number': sold_number})
     else:
         today_sold = Sold.objects.filter(sale_date__contains=get_today())
         name_list = []
@@ -727,13 +735,22 @@ def sale_data_by_day(request):
                 value_list.append([storage, i])
         if len(name_list) == 0:
             null = True
+
+        sold_number = Sold.objects.filter(sale_date__contains=get_today()).count()
+        today_sold = Sold.objects.filter(sale_date__contains=get_today())
+        today_earn = 0
+        for sold in today_sold:
+            today_earn += float(sold.sold_price) * int(sold.storage)
         return render(request, 'data/sale_data_by_day.html', {'year': get_year(),
                                                               'month': get_month(),
                                                               'day': get_day(),
-                                                              'date': get_today(),
+                                                              'date': '{}-{}-{}'.format(get_year(), get_month(), get_day()),
                                                               'category_list': name_list,
                                                               'value_list': value_list,
-                                                              'null': null})
+                                                              'null': null,
+                                                              'today_earn': today_earn,
+                                                              'sold_number': sold_number,
+                                                              'get': True})
 
 
 def sale_data_by_month(request):
