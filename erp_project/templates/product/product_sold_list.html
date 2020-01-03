@@ -77,6 +77,8 @@
                 <td>{{ p.sale_date }}</td>
                 <td>
                     <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}" >修改信息</a>
+                    <span>|</span>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_delete' p.id %}" >退货</a>
                 </td>
             </tr>
             {% endfor %}

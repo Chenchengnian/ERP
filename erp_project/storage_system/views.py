@@ -196,7 +196,7 @@ def product_list(request):
 
 def product_sold_list(request):
     if request.method == 'GET':
-        sold = Sold.objects.all().order_by('-created_time')
+        sold = Sold.objects.all().order_by('-sale_date')
         count = sold.count()
         paginator = Paginator(sold, 10)
         page = request.GET.get('page')
@@ -469,12 +469,14 @@ def product_update(request, pid):
 def product_sold(request, pid):
     product = Product.objects.get(id=pid)
     custom = Customer.objects.all().order_by('-created_time')
+    sale_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     name_list = []
     for name in custom:
         name_list.append(name.username)
     if request.method == "GET":
         return render(request, "product/product_sold.html", {'product': product,
                                                              'custom_list': custom,
+                                                             'sale_time': sale_time,
                                                              'title': '商品销货'})
     else:
         data = request.POST
@@ -490,8 +492,13 @@ def product_sold(request, pid):
                                    image=product.image,
                                    purchaser_id=purchase_id,
                                    payment_method=data['payment_method'],
-                                   sale_date=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+                                   sale_date=sale_time)
         sold.save(force_update=True)
+        try:
+            sold.sale_date = data['sale_date']
+            sold.save()
+        except:
+            pass
         storage = int(product.storage) - int(data['storage'])
         product.storage = storage
         product.save()
@@ -547,8 +554,26 @@ def sold_product_update(request, pid):
         product.storage = data['storage']
         product.payment_method = data['payment_method']
         product.save()
+        product.sale_date = str(data['sale_date']).replace('年', '-').replace('月', '-').replace('日', '')
+        product.save()
         product1.storage -= change_storage
         product1.save(force_update=True)
+        return redirect('/product_sold_list/')
+
+
+def sold_product_delete(request, pid):
+    sold = Sold.objects.get(id=pid)
+    # 获取销售数量
+    sold_number = sold.storage
+    # 获取当前商品的库存数量
+    product = Product.objects.get(name=sold.name)
+    if request.method == "GET":
+        return render(request, "product/sold_product_delete.html", {'product': sold,
+                                                                    'title': '退货'})
+    else:
+        sold.delete()
+        product.storage += int(sold_number)
+        product.save()
         return redirect('/product_sold_list/')
 
 

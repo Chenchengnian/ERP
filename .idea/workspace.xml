@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
+    <list default="true" id="f3fbef33-d63c-4a76-bd3e-b6e7864d3057" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/erp_project/templates/product/sold_product_delete.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_sold_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/templates/product/sold_product_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/sold_product_update.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,23 +36,23 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/erp_project/templates/data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/erp_project/templates/product" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/erp_project/templates/data" />
-      <recent name="$PROJECT_DIR$/erp_project/templates" />
-      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
-      <recent name="$PROJECT_DIR$/erp_project/media/product" />
-      <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/erp_project/templates/data" />
       <recent name="$PROJECT_DIR$/erp_project/storage_system/media/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates/product" />
       <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
       <recent name="$PROJECT_DIR$/erp_project" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/data" />
+      <recent name="$PROJECT_DIR$/erp_project/templates" />
+      <recent name="$PROJECT_DIR$/erp_project/media/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
     </key>
   </component>
   <component name="RunDashboard">
