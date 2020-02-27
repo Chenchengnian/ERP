@@ -42,9 +42,9 @@
     <label for="id_birthday">顾客生日,格式:1970-11-11:</label>
     <div class="form-group">
     <label id="id_birthday">
-      <input style="width: 145px" type="text" name="year" id="year" required="" oninput="value=value.slice(0,4)" value="{{ year }}">-
-            <input style="width: 145px" type="text" name="month" id="month" required="" max="12" oninput="if(value>12)value=12;value=value.slice(0,2)" value="{{ month }}">-
-            <input style="width: 145px" type="text" name="day" id="day" required="" max="31" oninput="if(value>31)value=31;value=value.slice(0,2)" value="{{ day }}"></label>
+      <input style="width: 145px" type="text" name="year" id="year" oninput="value=value.slice(0,4)" value="{{ year }}">-
+            <input style="width: 145px" type="text" name="month" id="month" max="12" oninput="if(value>12)value=12;value=value.slice(0,2)" value="{{ month }}">-
+            <input style="width: 145px" type="text" name="day" id="day" max="31" oninput="if(value>31)value=31;value=value.slice(0,2)" value="{{ day }}"></label>
         <br>
   </div>
 

@@ -15,6 +15,12 @@
         <br>
     </div>
 
+    <label>商品编号:</label>
+    <div class="form-group">
+        <h2>{{ product.code }}</h2>
+        <br>
+    </div>
+
     <script>
         function show() {
           document.getElementById("dialog-img").style.display = 'block';
@@ -37,7 +43,7 @@
         <br>
     </div>
 
-    <label >销售时间:</label>
+    <label >销售时间:<span style="color: red" >(24小时制,例如:2020年01月01日 13:00)</span></label>
     <div class="form-group">
         <input type="text" name="sale_date" maxlength="19" required="" id="id_sale_date" autocomplete="off" value="{{ sale_time }}">
         <br>
@@ -67,7 +73,7 @@
     <label for="id_price">商品售价:</label>
     <div class="form-group">
         <label><input type="number" name="price" step="any" required=""
-                      oninput="if(value<1)value=1" id="id_price"></label>
+                      oninput="if(value<=0)value=''" id="id_price"></label>
         <br>
     </div>
 

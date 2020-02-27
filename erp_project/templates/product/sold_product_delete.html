@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block search %}
-<h1>销售商品更新</h1>
+<h1>销售商品删除</h1>
 {% endblock %}
 
 {% block body %}
@@ -39,8 +39,9 @@
 
     <h1>是否确认要退货?</h1>
     <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认</button>
-    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <a style='text-decoration:none; color: green' href="/product_sold_list/">取消</a>
+    <button style="width:200px" type="submit" class="btn btn-primary btn-block">
+        <a style='text-decoration:none; color: white' href="/product_sold_list/">取消</a>
+    </button>
     </div>
 </form>
 {% endblock %}

@@ -55,27 +55,32 @@ def get_today():
 
 def get_month_date_list():
     date_list = []
-    if get_month() in [1, 3, 5, 7, 8, 10, 12]:
+    month = get_month()
+    if month in [1, 3, 5, 7, 8, 10, 12]:
         for i in range(1, 32):
             if i < 10:
                 i = '0' + str(i)
-            date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
-    elif get_month() in [4, 6, 9, 11]:
+            if get_month() < 10:
+                month = '0' + str(get_month())
+            date_list.append('{}-{}-{}'.format(get_year(), month, i))
+    elif month in [4, 6, 9, 11]:
         for i in range(1, 31):
             if i < 10:
                 i = '0' + str(i)
-            date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+            if get_month() < 10:
+                month = '0' + str(get_month())
+            date_list.append('{}-{}-{}'.format(get_year(), month, i))
     else:
         if (get_year() % 4) == 0 and (get_year() % 100) != 0 or (get_year() % 400) == 0:
             for i in range(1, 30):
                 if i < 10:
                     i = '0' + str(i)
-                date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+                date_list.append('{}-{}-{}'.format(get_year(), '0' + str(get_month()), i))
         else:
             for i in range(1, 29):
                 if i < 10:
                     i = '0' + str(i)
-                date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+                date_list.append('{}-{}-{}'.format(get_year(), '0' + str(get_month()), i))
     return date_list
 
 
@@ -100,12 +105,8 @@ def get_date_list():
 def get_weekday_date_list():
     date_list = []
     today = datetime.date.today()
-    this_week_start = today - timedelta(days=today.weekday())
-    this_week_end = today + timedelta(days=6 - today.weekday())
-    for i in range(int(str(this_week_start).split('-')[-1]), int(str(this_week_end).split('-')[-1]) + 1):
-        if i < 10:
-            i = '0' + str(i)
-        date_list.append('{}-{}-{}'.format(get_year(), get_month(), i))
+    for i in range(7):
+        date_list.append(str(today + timedelta(days=i - today.weekday())))
     return date_list
 
 
@@ -289,9 +290,14 @@ def create_custom(request):
                                          image=image,
                                          wechat=data['wechat'],
                                          address=data['address'],
-                                         birthday=birthday,
                                          user_info=data['user_info'])
         custom.save(force_update=True)
+        try:
+            custom.birthday = birthday
+            custom.save(force_update=True)
+        except:
+            pass
+
         return redirect('/custom_list')
     else:
         return render(request, 'custom/create_custom.html', {'title': '顾客录入'})
@@ -321,6 +327,7 @@ def create_product(request):
             return render(request, 'repeat.html', {'title': '错误'})
         category_id = Category.objects.get(name=data['category']).id
         product = Product.objects.create(name=data['name'],
+                                         code=data['code'],
                                          price=data['price'],
                                          image=image,
                                          storage=data['storage'],
@@ -379,11 +386,15 @@ def custom_update(request, cid):
             month = data['month']
             day = data['day']
             birthday = year + '-' + month + '-' + day
-            custom.birthday = birthday
             custom.wechat = data['wechat']
             custom.address = data['address']
             custom.user_info = data['user_info']
             custom.save(force_update=True)
+            try:
+                custom.birthday = birthday
+                custom.save(force_update=True)
+            except:
+                pass
             if flag_img == 1 and os.path.exists(img_path) and not pre_img.endswith('default.png'):
                 os.remove(img_path)
             return redirect('/custom_list/')
@@ -391,26 +402,13 @@ def custom_update(request, cid):
 
 def product_search(request):
     q = request.POST.get('keyword', '')
-    product = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q)).order_by('-created_time')
+    product = Product.objects.filter(Q(name__icontains=q) | Q(code__icontains=q)).order_by('-created_time')
     count = product.count()
     if count == 0:
         return render(request, 'product/product_result.html', {'count': count,
                                                                'title': '查找商品'})
     return render(request, 'product/product_result.html', {'product': product,
                                                            'title': '查找商品'})
-
-
-# def sold_product_search(request):
-#     q = request.POST.get('keyword', '')
-#     product = Product.objects.filter(Q(name__icontains=q) | Q(info__icontains=q)).order_by('-created_time')
-#     count = product.count()
-#     if count == 0:
-#         return render(request, 'product/sold_product_result.html', {'count': count,
-#                                                                     'title': '查找销售商品'})
-#     else:
-#         print(product)
-#         return render(request, 'product/sold_product_result.html', {'product': product,
-#                                                                     'title': '查找销售商品'})
 
 
 def product_detail(request, pid):
@@ -443,6 +441,7 @@ def product_update(request, pid):
             new_category = Category.objects.create(name=data['category'])
             new_category.save()
         product.name = data['name']
+        product.code = data['code']
         product.price = data['price']
         if request.FILES.get('image', '') != '':
             pre_img = str(product.image)
@@ -469,7 +468,7 @@ def product_update(request, pid):
 def product_sold(request, pid):
     product = Product.objects.get(id=pid)
     custom = Customer.objects.all().order_by('-created_time')
-    sale_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    sale_time = time.strftime("%Y年%m月%d日 %H:%M", time.localtime())
     name_list = []
     for name in custom:
         name_list.append(name.username)
@@ -485,6 +484,7 @@ def product_sold(request, pid):
             new_custom.save()
         purchase_id = Customer.objects.get(username=data['custom']).id
         sold = Sold.objects.create(name=product.name,
+                                   code=product.code,
                                    price=product.price,
                                    sold_price=data['price'],
                                    category=product.category,
@@ -492,7 +492,7 @@ def product_sold(request, pid):
                                    image=product.image,
                                    purchaser_id=purchase_id,
                                    payment_method=data['payment_method'],
-                                   sale_date=sale_time)
+                                   sale_date=str(data['sale_date']).replace('年', '-').replace('月', '-').replace('日', ''))
         sold.save(force_update=True)
         try:
             sold.sale_date = data['sale_date']
@@ -643,9 +643,7 @@ def total_data(request):
             for s in sold:
                 earn_by_month += float(s.sold_price) * int(s.storage)
             y_axis_pre_day_by_month.append(earn_by_month)
-
     y_axis_pre_day_by_week = []
-
     for date in get_weekday_date_list():
         sold = Sold.objects.filter(sale_date__contains=date)
         if len(sold) == 0:
@@ -666,13 +664,16 @@ def total_data(request):
     for i in name_list:
         try:
             today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).get(name=i)
-            value_list.append([int(today_sold_by_name.storage), i])
+            number = int(today_sold_by_name.storage)
+            value_list.append([int(today_sold_by_name.storage) * int(today_sold_by_name.sold_price), i, number])
         except:
             today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).filter(name=i)
-            storage = 0
+            earn = 0
+            number = 0
             for j in today_sold_by_name:
-                storage += int(j.storage)
-            value_list.append([storage, i])
+                number += int(j.storage)
+                earn += int(j.storage) * int(j.sold_price)
+            value_list.append([earn, i, number])
     if len(name_list) == 0:
         null = True
     return render(request, 'data/total_data.html', {'month': get_month(),
@@ -681,7 +682,8 @@ def total_data(request):
                                                     'y_axis_pre_day_by_week': y_axis_pre_day_by_week,
                                                     'category_list': name_list,
                                                     'value_list': value_list,
-                                                    'null': null})
+                                                    'null': null,
+                                                    'title': '数据大盘'})
 
 
 def sale_data_by_day(request):
@@ -715,13 +717,16 @@ def sale_data_by_day(request):
         for i in name_list:
             try:
                 today_sold_by_name = Sold.objects.filter(sale_date__contains=date).get(name=i)
-                value_list.append([int(today_sold_by_name.storage), i])
+                number = int(today_sold_by_name.storage)
+                value_list.append([int(today_sold_by_name.storage) * int(today_sold_by_name.sold_price), i, number])
             except:
                 today_sold_by_name = Sold.objects.filter(sale_date__contains=date).filter(name=i)
-                storage = 0
+                earn = 0
+                number = 0
                 for j in today_sold_by_name:
-                    storage += int(j.storage)
-                value_list.append([storage, i])
+                    number += int(j.storage)
+                    earn += int(j.storage) * int(j.sold_price)
+                value_list.append([earn, i, number])
 
         if len(name_list) == 0:
             null = True
@@ -739,7 +744,8 @@ def sale_data_by_day(request):
                                                               'value_list': value_list,
                                                               'null': null,
                                                               'today_earn': today_earn,
-                                                              'sold_number': sold_number})
+                                                              'sold_number': sold_number,
+                                                              'title': '{}销售数据'.format(date)})
     else:
         today_sold = Sold.objects.filter(sale_date__contains=get_today())
         name_list = []
@@ -751,13 +757,16 @@ def sale_data_by_day(request):
         for i in name_list:
             try:
                 today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).get(name=i)
-                value_list.append([int(today_sold_by_name.storage), i])
+                number = int(today_sold_by_name.storage)
+                value_list.append([int(today_sold_by_name.storage) * int(today_sold_by_name.sold_price), i, number])
             except:
                 today_sold_by_name = Sold.objects.filter(sale_date__contains=get_today()).filter(name=i)
-                storage = 0
+                earn = 0
+                number = 0
                 for j in today_sold_by_name:
-                    storage += int(j.storage)
-                value_list.append([storage, i])
+                    number += int(j.storage)
+                    earn += int(j.storage) * int(j.sold_price)
+                value_list.append([earn, i, number])
         if len(name_list) == 0:
             null = True
 
@@ -775,7 +784,8 @@ def sale_data_by_day(request):
                                                               'null': null,
                                                               'today_earn': today_earn,
                                                               'sold_number': sold_number,
-                                                              'get': True})
+                                                              'get': True,
+                                                              'title': '今日销售数据'})
 
 
 def sale_data_by_month(request):

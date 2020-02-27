@@ -121,7 +121,7 @@
         }
         </script>
 
-    <div id="container3" style="height: 40%; width: 40%; display:inline-block; float：right"></div>
+    <div id="container3" style="height: 40%; width: 45%; display:inline-block; float：right"></div>
            <script type="text/javascript">
 var dom = document.getElementById("container3");
 var myChart = echarts.init(dom);
@@ -132,7 +132,7 @@ app.title = '环形图';
 option = {
     tooltip: {
         trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
+        formatter: "{a} <br/>{b}: {c}"
     },
     title: {
                 left: 'center',
@@ -161,7 +161,7 @@ option = {
                 emphasis: {
                     show: true,
                     textStyle: {
-                        fontSize: '30',
+                        fontSize: '16',
                         fontWeight: 'bold'
                     }
                 }
@@ -173,7 +173,7 @@ option = {
             },
             data:[
             {% for data in value_list %}
-                {value:{{ data.0 }}, name:'{{ data.1 }}'},
+               {value:{{ data.0 }}, name:'{{ data.1 }}({{ data.2 }}件)'},
             {% endfor %}
             ]
         }
