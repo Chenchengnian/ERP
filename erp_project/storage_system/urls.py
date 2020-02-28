@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^product_detail/(?P<pid>\d+)/$', views.product_detail, name='product_detail'),
     url(r'^product_update/(?P<pid>\d+)/$', views.product_update, name='product_update'),
     url(r'^sold_product_update/(?P<pid>\d+)/$', views.sold_product_update, name='sold_product_update'),
+    url(r'^sold_product_delete/(?P<pid>\d+)/$', views.sold_product_delete, name='sold_product_delete'),
     url(r'^create_category/$', views.create_category, name='create_category'),
     url(r'^category_list/$', views.category_list, name='category_list'),
     url(r'^category_update/(?P<cid>\d+)/$', views.category_update, name='category_update'),

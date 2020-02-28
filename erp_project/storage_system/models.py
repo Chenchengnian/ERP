@@ -16,28 +16,6 @@ class Tag(models.Model):
         return self.name
 
 
-class Status(models.Model):
-    choices = (('未入库', '未入库'),
-               ('已入库', '已入库'),
-               ('需补货', '需补货'),
-               ('已出售', '已出售'))
-    status = models.CharField(max_length=32, choices=choices, verbose_name='状态')
-    is_enable = models.BooleanField(default=True, verbose_name='是否可见')
-    is_delete = models.BooleanField(default=False, verbose_name='是否删除')
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    modified_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-
-    class Meta:
-        verbose_name = '状态'
-        verbose_name_plural = '状态'
-
-    def __str__(self):
-        return self.status
-
-    def __unicode__(self):
-        return self.status
-
-
 class Category(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, unique=True, verbose_name='分类')
     is_enable = models.BooleanField(default=True, verbose_name='是否可见')
@@ -76,10 +54,11 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
+    code = models.CharField(max_length=200, blank=False, null=False, verbose_name='商品编号')
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
     image = models.ImageField(upload_to='product', default='product/default.png', verbose_name='商品图片')
-    # status = models.ForeignKey(Status, verbose_name='商品状态', related_name='product_status')
+    status = models.CharField(max_length=200, verbose_name='商品状态', default='已入库')
     category = models.ForeignKey(Category, verbose_name='分类', blank=True, null=True, related_name='product_category')
     storage = models.IntegerField(verbose_name='库存数量')
     info = models.TextField(blank=True, null=True, verbose_name='产品信息')
@@ -99,11 +78,13 @@ class Product(models.Model):
 
 class Sold(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, verbose_name='商品名称')
+    code = models.CharField(max_length=200, blank=False, null=False, verbose_name='商品编号')
     price = models.FloatField(verbose_name='商品价格')
     sold_price = models.FloatField(verbose_name='销售价格')
     image = models.ImageField(upload_to='media/product', default='media/product/default.png', verbose_name='商品图片')
     category = models.ForeignKey(Category, verbose_name='分类', related_name='sold_category')
     sale_date = models.DateTimeField(verbose_name='销售日期')
+    status = models.CharField(max_length=200, verbose_name='商品状态', default='已出售')
     purchaser = models.ForeignKey(Customer, verbose_name='购买者', related_name='sold_purchaser')
     payment_method = models.CharField(max_length=200, blank=False, null=False, default='微信支付', verbose_name='付款方式')
     storage = models.IntegerField(verbose_name='销售数量')

@@ -1,14 +1,10 @@
 from django.contrib import admin
 
-from .models import Tag, Status, Category, Product, Customer, Sold
+from .models import Tag, Category, Product, Customer, Sold
 
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'created_time', 'modified_time']
-
-
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ['id', 'status', 'is_enable', 'created_time', 'modified_time']
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -32,7 +28,6 @@ class SoldAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag, TagAdmin)
-admin.site.register(Status, StatusAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Customer, CustomerAdmin)

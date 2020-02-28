@@ -12,7 +12,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>序号</th>
+                <th>商品编号</th>
                 <th>商品名称</th>
                 <th>商品售价</th>
                 <th>销售数量</th>
@@ -38,7 +38,7 @@
             {% endfor %}
             {% for p in product %}
             <tr>
-                <th scope="row">{{ p.id }}</th>
+                <th scope="row">{{ p.code }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.sold_price }}</td>
                 <td>{{ p.storage }}</td>

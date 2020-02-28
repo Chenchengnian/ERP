@@ -17,10 +17,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th>序号</th>
+                <th>商品编号</th>
                 <th>商品名称</th>
                 <th>商品价格</th>
                 <th>商品图片</th>
+                <th>商品状态</th>
                 <th>商品分类</th>
                 <th>库存数量</th>
                 <th>入库时间</th>
@@ -40,7 +41,7 @@
             {% endfor %}
             {% for p in product %}
             <tr>
-                <th scope="row">{{ p.id }}</th>
+                <th scope="row">{{ p.code }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.price }}</td>
                 <td>
@@ -53,7 +54,7 @@
                     </div>
                 </div>
 
-<!--                <td>{{ p.status }}</td>-->
+                <td>{{ p.status }}</td>
                 <td>{{ p.category }}</td>
                 <td>{{ p.storage }}</td>
                 <td>{{ p.created_time }}</td>

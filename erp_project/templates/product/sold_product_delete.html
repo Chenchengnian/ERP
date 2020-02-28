@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block search %}
+<h1>销售商品删除</h1>
+{% endblock %}
+
+{% block body %}
+<form style="padding-left: 5%" class="form" action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>商品名称:{{ product.name }}</h3>
+    <br>
+
+
+    <h3>销售价格:{{ product.sold_price }}</h3>
+        <br>
+
+
+    <h3>商品图片:</h3>
+    <div class="form-group">
+        <div style="height: 400px; width: 400px"><img style="height: 100%; width: 100%" src="/media/{{ product.image }}"></div>
+        <br>
+    </div>
+
+    <h3>分类:{{ product.category }}</h3>
+        <br>
+
+
+    <h3>销售数量:{{ product.storage }}</h3>
+        <br>
+
+ <h3>购买者:{{ product.purchaser }}</h3>
+        <br>
+
+
+    <h3>购买时间:{{ product.sale_date }}</h3>
+        <br>
+
+    <h1>是否确认要退货?</h1>
+    <button style="width:200px" type="submit" class="btn btn-primary btn-block">确认</button>
+    <button style="width:200px" type="submit" class="btn btn-primary btn-block">
+        <a style='text-decoration:none; color: white' href="/product_sold_list/">取消</a>
+    </button>
+    </div>
+</form>
+{% endblock %}

@@ -31,7 +31,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>序号</th>
+                <th>商品编号</th>
                 <th>商品名称</th>
                 <th>商品售价</th>
                 <th>销售数量</th>
@@ -57,7 +57,7 @@
             {% endfor %}
             {% for p in sold %}
             <tr>
-                <th scope="row">{{ p.id }}</th>
+                <th scope="row">{{ p.code }}</th>
                 <td>{{ p.name }}</td>
                 <td>{{ p.sold_price }}</td>
                 <td>{{ p.storage }}</td>
@@ -70,14 +70,20 @@
                         <img src="/media/{{ p.image }}/">
                     </div>
                 </div>
-                <td>已出售</td>
+                <td>{{ p.status }}</td>
                 <td>{{ p.purchaser }}</td>
                 <td>{{ p.payment_method }}</td>
                 <td>{{ p.category }}</td>
                 <td>{{ p.sale_date }}</td>
+
                 <td>
+                    {% if p.status == "已出售" %}
                     <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_update' p.id %}" >修改信息</a>
+                    <span>|</span>
+                    <a name="{{ p.id }}" href="{% url 'storage_system:sold_product_delete' p.id %}" >退货</a>
+                    {% endif %}
                 </td>
+
             </tr>
             {% endfor %}
             </tbody>

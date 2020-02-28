@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -25,6 +26,14 @@
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/create_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/create_product.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp_project/templates/product/product_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/templates/product/product_detail.html" afterDir="false" />
 >>>>>>> a8b3397e631a4b697f5a0ad64dd6de9fe142a464
+=======
+    <list default="true" id="f3fbef33-d63c-4a76-bd3e-b6e7864d3057" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/erp_project/storage_system/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/erp_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/erp_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erp_project/storage_system/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/erp_project/storage_system/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ipoms/crons.py" beforeDir="false" />
+>>>>>>> origin/release/v1.0
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -199,8 +208,13 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$/erp_project/media/custom" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+>>>>>>> origin/release/v1.0
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -216,6 +230,13 @@
       <recent name="C:\Users\Orange\Desktop\ERP\erp_project" />
       <recent name="$PROJECT_DIR$/erp_project/templates/data" />
       <recent name="$PROJECT_DIR$/erp_project/templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/erp_project/templates/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/data" />
+      <recent name="$PROJECT_DIR$/erp_project/templates" />
+      <recent name="$PROJECT_DIR$/erp_project/media/product" />
+      <recent name="$PROJECT_DIR$/erp_project/templates/custom" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -351,7 +372,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="28db0d9b-0090-495c-ac2f-c1b7dcee7b02" name="Default Changelist" comment="" />
+      <changelist id="f3fbef33-d63c-4a76-bd3e-b6e7864d3057" name="Default Changelist" comment="" />
       <created>1565085940608</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
