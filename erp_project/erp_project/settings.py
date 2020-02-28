@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storage_system',
-    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -126,19 +125,4 @@ STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 MEDIA_URL = '/media/'
 MEIDA_ROOT = '{}/media/'.format(BASE_DIR)
 
-# 定时任务
-CRONJOBS = [
-    ('*/1 * * * *', 'ipoms.crons.update_shortage', '>>' + os.path.join(BASE_DIR, 'logs/crons.log'))
-]
-"""
-     python3 manage.py crontab add  添加定时任务
-     python3 manage.py crontab remove 删除定时任务
-     python3 manage.py crontab show 查看定时任务
-
-    * * * * * command
-    分钟(0-59) 小时(0-23) 每个月的哪一天(1-31) 月份(1-12) 周几(0-6) shell脚本或者命令
-     0 6 * * * commands >> /tmp/test.log # 每天早上6点执行, 并将信息追加到test.log中
-
-"""
-CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
 

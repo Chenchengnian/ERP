@@ -76,7 +76,7 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
-    code = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品编号')
+    code = models.CharField(max_length=200, blank=False, null=False, verbose_name='商品编号')
     name = models.CharField(max_length=200, blank=False, null=False, unique=True, verbose_name='商品名称')
     price = models.FloatField(verbose_name='商品价格')
     image = models.ImageField(upload_to='media/product', default='media/product/default.png', verbose_name='商品图片')
